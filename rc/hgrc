@@ -37,7 +37,7 @@ qimportbz = $CONFDIR/hgext/qimportbz
 bzexport = $CONFDIR/hgext/bzexport/bzexport.py
 patience = $CONFDIR/hgext/hg-patience/patience.py
 #mqext = $CONFDIR/hgext/mqext
-inotify =
+#inotify =
 transplant =
 qbackout = $CONFDIR/hgext/qbackout
 
