@@ -1,0 +1,5 @@
+export MACHINE='main'
+export USE_QTOP_PROMPT=1
+source $CONFDIR/shell-src/moz-dirs.sh
+
+PROMPT_COLOR="34m"
