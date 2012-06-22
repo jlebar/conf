@@ -1,0 +1,97 @@
+# Mercurial config file
+[ui]
+username = Justin Lebar <justin.lebar@gmail.com>
+merge = internal:merge
+ignore.other = $CONFDIR/rc/hgignore
+
+[defaults]
+qseries = -v
+qapplied = -v
+#qref = -U -D
+
+[alias]
+qstatus = status --rev qtip^
+qedit = !S=$(hg root)/.hg/patches/series; cp $S $S.bak && perl -pale 'BEGIN { chomp(@a = qx(hg qapplied -q)); die if $?; @a{@a}=(); }; s/^/# (applied) / if exists $a{$F[0]}' $S > $S.new && ${EDITOR-vim} $S.new && sed -e 's/^# .applied. //' $S.new > $S
+
+[hooks]
+post-push = hg phase --force --draft "mq()"
+ 
+[extensions]
+mq =
+graphlog =
+rebase =
+extdiff =
+record =
+pager =
+progress =
+parentrevspec =
+purge =
+color =
+convert =
+bookmarks =
+#hggit =
+relink =
+prompt = $CONFDIR/hgext/hg-prompt-local/prompt.py
+paste = $CONFDIR/hgext/hg-paste/paste.py
+qimportbz = $CONFDIR/hgext/qimportbz
+bzexport = $CONFDIR/hgext/bzexport/bzexport.py
+patience = $CONFDIR/hgext/hg-patience/patience.py
+#mqext = $CONFDIR/hgext/mqext
+inotify =
+transplant =
+qbackout = $CONFDIR/hgext/qbackout
+
+[bzexport]
+#api_server = https://api-dev.bugzilla.mozilla.org/test/latest/
+#bugzilla = https://landfill.bugzilla.org/bzapi_sandbox/
+#username=justin.lebar+bug@gmail.com
+#password=password
+%include ~/.bzexport-credentials
+
+[diff]
+git = 1
+showfunc = 1
+unified = 8
+patience = 1
+
+[paths]
+mozilla-central = ssh://hg.mozilla.org/mozilla-central
+try = ssh://hg.mozilla.org/try
+cedar = ssh://hg.mozilla.org/projects/cedar
+inbound = ssh://hg.mozilla.org/integration/mozilla-inbound
+build-system = ssh://hg.mozilla.org/projects/build-system
+
+[pager]
+pager = LESS='FSRX' less
+
+[extdiff]
+cmd.interdiff = interdiff
+opts.interdiff = -U8
+
+[paste]
+dest = dpaste.com
+
+[color]
+status.modified = none
+status.added = none
+status.removed = none
+status.deleted = none
+status.unknown = none
+status.ignored = none
+
+diff.diffline = none
+diff.extended = none
+diff.file_a = magenta
+diff.file_b = cyan
+diff.hunk = none
+diff.deleted = magenta
+diff.inserted = cyan
+diff.changed = white
+diff.trailingwhitespace = red_background
+
+qseries.applied = none
+qseries.unapplied = none
+qseries.missing = red
+
+resolve.unresolved = red
+resolve.resolved = none

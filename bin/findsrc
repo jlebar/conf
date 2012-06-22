@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# ncpus is available in the mdm package.  Or just write it yourself.
+
+echo $0 $@
+if [[ "$1" == "-h" ]] ; then
+  shift
+  srcfiles h | xargs -P $(ncpus) grep $@
+else
+  srcfiles | xargs -P $(ncpus) grep $@
+fi

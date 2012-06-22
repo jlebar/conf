@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# To mount the nas via NFS, do
+# showmount -e jlebar-nas
+# sudo mount jlebar-nas:/c/backup ~/nas
+
+set -e
+
+NAS_HOSTNAME="192.168.1.101"
+LARGE_DRIVE="/media/hdd/jlebar"
+RSYNC_FLAGS="--human-readable -a -v"
+RSYNC_LINK_FLAGS="--link-dest=/c/backup/jlebar-external/last-backup"
+RSYNC_EXCLUDES='--exclude=virtual-machines'
+DATE=`date --rfc-3339=date`
+
+NAS_BACKUP_LOCATION="jlebar@$NAS_HOSTNAME:/c/backup/jlebar-external/$DATE"
+
+ssh jlebar@$NAS_HOSTNAME -i $HOME/.ssh/id_nas_rsa /c/backup/relink-backup jlebar-external $DATE
+
+nice rsync -e "ssh -i $HOME/.ssh/id_nas_rsa" \
+  $RSYNC_FLAGS $RSYNC_LINK_FLAGS $RSYNC_EXCLUDES \
+  $LARGE_DRIVE/* $NAS_BACKUP_LOCATION

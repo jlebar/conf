@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/jlebar/.xchat2/xchatlogs'
+let g:netrw_dirhist_2='/tmp/vmware-root'
+let g:netrw_dirhist_3='/tmp'
+let g:netrw_dirhist_4='/home/jlebar/code/moz/B2G/glue/gonk-ics/.repo'
+let g:netrw_dirhist_5='/home/jlebar/code/moz/ff-git/src/dom/browser-element/mochitest'

@@ -1,0 +1,100 @@
+# TODO: Set CONFDIR automatically.  dirname $0 is insufficient.
+export CONFDIR=$HOME/conf
+
+# Make sure that our path is right.
+. $CONFDIR/shell-src/set-path.sh
+
+export EDITOR=vim
+export CCACHE_BASEDIR=$HOME
+export CCACHE_HARDLINK=1
+export ANDROID_SDK=$HOME/code/moz/android-sdk-linux_x86
+export ANDROID_NDK=$HOME/code/moz/android-ndk-r6
+
+set -o vi
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+RUN_T="python $CONFDIR/t/t.py"
+alias t="$RUN_T -t $HOME/tasks --list tasks"
+alias mozt="$RUN_T -t $HOME/tasks --list mozilla"
+
+# On mac, use pbcopy
+alias xclip="xclip -selection c"
+
+# rse function
+if [ -f $CONFDIR/shell-src/funcs.sh ]; then
+    . $CONFDIR/shell-src/funcs.sh
+fi
+
+# hg completion
+if [ -f $CONFDIR/shell-src/bash-completion-hg ]; then
+    . $CONFDIR/shell-src/bash-completion-hg
+fi
+
+# Call our not-checked-in machine-specific bashrc, if it exists.
+if [ -f $HOME/.bashrc_machine ]; then
+  . $HOME/.bashrc_machine
+fi
+
+# machine-specific bashrc
+if [[ -f $CONFDIR/machines/$MACHINE/bashrc ]]; then
+  . $CONFDIR/machines/$MACHINE/bashrc
+fi
+
+function vcs-branchname() {
+  if [[ "$USE_QTOP_PROMPT" == "" ]]; then
+    return
+  fi
+
+  qtop=`hg prompt '{patch|topindex}{ {patch}}' 2>/dev/null`
+  if [[ "$qtop" != "" ]]; then
+    echo " ($qtop)"
+    return
+  fi
+
+  git_branch=`git branchname`
+  if [[ "$git_branch" != "" ]]; then
+    echo " ($git_branch)"
+    return
+  fi
+}
+
+if [[ "$PROMPT_COLOR" == "" ]]; then
+  PROMPT_COLOR="35m"
+fi
+
+PROMPT_COMMAND='MERCURIAL_QTOP=`vcs-branchname`'
+PS1='\[\033[01;$PROMPT_COLOR\]\u@\h\[\033[00m\]:\[\033[01;$PROMPT_COLOR\]\w\[\033[00m\]$MERCURIAL_QTOP\$ '
+
+shopt -s histappend
+# force ignoredups and ignorespace
+export HISTCONTROL='ignoreboth'
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi

@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+import sys, os
+from optparse import OptionParser
+
+def get_current_mozconfig_name():
+    if not os.path.exists('.mozconfig'):
+        return None
+    if not os.path.islink('.mozconfig'):
+        err('.mozconfig is not a symlink!')
+    path = os.readlink('.mozconfig')
+    return  os.path.basename(path)
+
+def show_current_mozconfig():
+    print 'Current mozconfig: %s' % get_current_mozconfig_name()
+
+def list_mozconfigs():
+    if not os.path.exists('../../mozconfigs'):
+        err('No mozconfigs directory found!')
+    if not os.path.isdir('../../mozconfigs'):
+        err('../../mozconfigs is not a directory!')
+    print 'Available mozconfigs:'
+    cur_mozconfig = get_current_mozconfig_name()
+    for f in sorted(os.listdir('../../mozconfigs')):
+        basename = os.path.basename(f)
+        if basename == cur_mozconfig:
+            print '  * %s' % basename
+        elif 'mozconfig-extra' in basename:
+            pass
+        else:
+            print '    %s' % basename
+
+def switch_mozconfig(f):
+    path = os.path.join('../../mozconfigs', f)
+    if not os.path.exists(path):
+        err('Cannot open %s' % path)
+    try:
+        os.remove('.mozconfig')
+    except OSError as e:
+        print "Warning: Can't remove .mozconfig file."
+
+    os.symlink(path, '.mozconfig')
+    show_current_mozconfig()
+
+def usage_err():
+    err('Usage: %s [mozconfig]' % sys.argv[0])
+
+def err(msg):
+    print msg
+    sys.exit(1)
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        list_mozconfigs()
+    elif len(sys.argv) == 2:
+        switch_mozconfig(sys.argv[1])
+    else:
+        usage_err()

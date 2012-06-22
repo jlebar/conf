@@ -1,0 +1,45 @@
+Justin's VIM tips
+
+|set ft=foo| instead of |set syntax=foo|.
+
+C-A, C-X    increment/decrement next number on current line
+
+H / M / L   go to top, middle, bottom of screen
+^ or _      go to first non-space char on line
+,           same as ;, but opposite direction
+'.          jump to last modification line
+`.          jump to last modification location
+'' or ``    jump to position before last jump
+'"          jump to cursor position when last editing file
+'[          jump to start of last change
+']          jump to end of last change
+C-O, C-I    retrace movements forward/backward
+
+These also work with d (delete) and y (yank):
+See  :h text-objects
+  ci)         change everything inside the current ()
+  caw         delete che current word
+  ciB         change the current block
+
+^N          for syntax completion?
+
+C-W c       close a window
+
+mA, m0      Global marks (A-Z, 0-9)!
+
+CTRL-V      Enter ^[, ^m, etc.  See :help c_Ctrl-v
+
+:set fo+=a  Auto-wrap text
+            also gwap, :help joinspaces
+
+== Buffer explorer ==
+\be         buffer explorer
+D           :delete current buffer
+s           toggle sort order
+u           toggle showing of unlisted (D'ed) buffers
+
+== Sessions ==
+http://vimdoc.sourceforge.net/htmldoc/usr_21.html
+:marks
+:mksession session.vim
+:source session.vim

@@ -1,0 +1,29 @@
+#!/bin/bash
+valgrind \
+  --smc-check=all --trace-children=yes \
+  --tool=massif \
+  --pages-as-heap=yes --detailed-freq=1000000 \
+  --threshold=0.5 \
+  --alloc-fn=mmap \
+  --alloc-fn=syscall \
+  --alloc-fn=pages_map \
+  --alloc-fn=chunk_alloc \
+  --alloc-fn=arena_run_alloc \
+  --alloc-fn=arena_bin_malloc_hard \
+  --alloc-fn=malloc \
+  --alloc-fn=realloc \
+  --alloc-fn='operator new(unsigned long)' \
+  --alloc-fn=huge_malloc \
+  --alloc-fn=posix_memalign \
+  --alloc-fn=moz_xmalloc \
+  --alloc-fn=JS_ArenaAllocate \
+  --alloc-fn=PL_ArenaAllocate \
+  --alloc-fn=NS_Alloc_P \
+  --alloc-fn=NS_Realloc_P \
+  --alloc-fn='XPConnectGCChunkAllocator::doAlloc()' \
+  --alloc-fn='PickChunk(JSRuntime*)' \
+  --alloc-fn='RefillFinalizableFreeList(JSContext*, unsigned int)' \
+  --alloc-fn=sqlite3MemMalloc \
+  --alloc-fn=mallocWithAlarm \
+  --alloc-fn=sqlite3Malloc \
+  $@

@@ -1,0 +1,2 @@
+export PYTHONPATH=$HOME/lib/python:$PYTHONPATH
+

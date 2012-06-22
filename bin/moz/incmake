@@ -1,0 +1,39 @@
+#!/usr/bin/python
+
+import sys
+import multiprocessing
+from subprocess import Popen, PIPE
+
+all_quiet = False
+def build(dir, quiet):
+  print("@@@ Building in %s" % dir)
+  cmd = "rse %s make -j%d" % ('-q' if quiet or all_quiet
+                                   else '', multiprocessing.cpu_count() * 2)
+  proc = Popen(cmd.split(), cwd=dir)
+  proc.wait()
+
+  if proc.returncode != 0:
+    sys.exit(proc.returncode)
+
+args = sys.argv[1:]
+if args[0] == '-q':
+    all_quiet = True
+    args = args[1:]
+
+to_build = list(args)
+
+# If we're building docshell/base, we need to build docshell.
+if "docshell/base" in to_build:
+  to_build.append("docshell")
+  to_build.remove("docshell/base")
+
+to_build += ["layout/build", "toolkit/library"]
+
+# If we're building a browser directory, make browser/components/build as well.
+if filter(lambda x: "browser" in x, to_build):
+  to_build.append("browser/components/build")
+
+for dir in to_build[0:-1]:
+    build(dir, quiet=True)
+
+build(to_build[-1], quiet=False)

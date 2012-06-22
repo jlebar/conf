@@ -1,0 +1,125 @@
+syntax on
+set nocompatible
+set t_Co=256
+set bg=light
+
+set hlsearch
+set incsearch
+set tabstop=8
+set autoindent
+set background=light
+set formatoptions=1
+set lbr
+set autowrite
+set ttyfast  " turn off if connection is slow
+if version >= 730
+  set relativenumber
+  set undofile
+endif
+
+set spelllang=en_us
+set spellfile=~/.vim/spellfile.add
+
+" Navigate by visual lines, not file lines.
+nnoremap <buffer> k gk
+nnoremap <buffer> j gj
+nnoremap <buffer> <Up> gk
+nnoremap <buffer> <Down> gj
+nnoremap <buffer> 0 g0
+nnoremap <buffer> ^ g^
+nnoremap <buffer> $ g$
+inoremap <buffer> <Up> <C-O>gk
+inoremap <buffer> <Down> <C-O>gj
+vnoremap <buffer> k gk
+vnoremap <buffer> j gj
+vnoremap <buffer> <Up> gk
+vnoremap <buffer> <Down> gj
+vnoremap <buffer> 0 g0
+vnoremap <buffer> ^ g^
+vnoremap <buffer> $ g$
+
+" Break lines at word boundaries
+set wrap
+set linebreak
+setlocal encoding=utf-8
+
+
+set hlsearch  " highlight searches
+set incsearch " incremental search
+set gdefault  " append /g to find/replace by default
+" \<space> to clear search highlighting
+noremap <leader><space> :nohl<cr>
+
+" Very magic searches by default.
+nnoremap / /\v
+vnoremap / /\v
+
+filetype plugin on
+filetype indent on
+filetype on " taglist plugin needs filetype detection
+
+" Auto-format comments with gq
+set formatoptions=q
+
+" \s does a syntax resync
+noremap <leader>s :syn sync fromstart<CR>
+
+" \8 resizes the window to 80 characters wide
+noremap <leader>8 :vertical resize 80<CR>
+
+" \f does gwap to reformat the current paragraph
+noremap <leader>f gwap
+
+" \c scrolls so the cursor is 5 lines from the top of the screen
+noremap <leader>c z<CR> 5<C-y>
+
+" wildmenu for file open tab completion.  Press ^D to see contents of current
+" dir.
+set wildmenu
+set wildignore=*.o,*.obj,*.bak,*.exe,*.class,*.pyc,*.pyo
+
+"set verbose=9
+
+" Define spacehi in a group so it can be disabled.
+augroup SPACEHI
+  autocmd FileType * SpaceHi
+  autocmd FileType help NoSpaceHi
+augroup END
+
+autocmd FileType * setlocal expandtab|setlocal shiftwidth=2|setlocal softtabstop=2
+autocmd FileType make setlocal noexpandtab|setlocal softtabstop=0
+autocmd FileType python setlocal softtabstop=4|setlocal shiftwidth=4
+
+" Case-insensitive searches, *unless* our our query contains an upper-case
+" character.
+set ignorecase
+set smartcase
+
+" Visual shifting without exiting visual mode!
+vnoremap < <gv
+vnoremap > >gv
+
+" taglist settings
+let Tlist_Compact_Format = 1
+let Tlist_File_Fold_Auto_Close = 1
+noremap <leader>h :TlistHighlightTag<cr>
+"let Tlist_Auto_Highlight_Tag = 0
+
+if has("gui_running")
+
+endif
+
+" set display+=lastline " not sure what this does
+
+"set backupdir=$TEMP\\vim\\
+"set directory=$TEMP\\vim\\
+"silent execute '!rm -f '.$TEMP.'/vim/*~'
+set nobackup
+set nowritebackup
+
+"enable mouse
+set mouse=a
+set modeline
+
+set statusline=%f\ %y\ %([%R%M]%)\ %=#%n\ %l/%L,%c%V
+set laststatus=2

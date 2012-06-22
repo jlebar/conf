@@ -1,0 +1,1 @@
+../search_plugin/search.vim

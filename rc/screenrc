@@ -1,0 +1,31 @@
+vbell off
+vbell_msg "   Wuff  ----  Wuff!!  "
+startup_message off
+#escape ``
+#escape `e
+password none
+
+#change the hardstatus settings to give an window list at the bottom of the
+#screen, with the time and date and with the current window highlighted
+hardstatus alwayslastline
+hardstatus string '%{= cK}%-Lw%{= KW}%50>%n%f* %t%{= cK}%+Lw%< %{= kG}%-='
+altscreen on
+
+# Turns off alternate screen switching in xterms,
+# so that text in screen will go into the xterm's scrollback buffer:
+termcapinfo xterm* ti@:te@
+termcapinfo cygwin* ti@:te@
+
+defscrollback 8192
+shell -$SHELL
+
+#### 256 color support
+# terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+attrcolor b ".I"
+# tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm  'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo cygwin 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+# erase background with current bg color
+defbce "on"
+####

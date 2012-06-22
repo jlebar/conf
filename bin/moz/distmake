@@ -1,0 +1,10 @@
+#!/bin/bash
+
+export DISTCC_HOSTS='albus whiskeysour gandalf localhost'
+#export CC='distcc gcc-4.4'
+#export CXX='distcc g++-4.4'
+export CCACHE_PREFIX='distcc'
+export CC='ccache gcc-4.4'
+export CXX='ccache g++-4.4'
+
+$@

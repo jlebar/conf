@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+cd .hg/patches
+hg push
+cd $HOME/code/moz/patches
+hg push
+hg update

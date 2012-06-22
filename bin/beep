@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ogg123 $(dirname $0)/bell.ogg 2> /dev/null &

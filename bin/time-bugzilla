@@ -1,0 +1,8 @@
+#!/bin/bash
+
+bug=$(($RANDOM + 600000))
+paste \
+  <(date) \
+  <(echo "Bug $bug") \
+  <(/usr/bin/time -o /dev/stdout -f '%e' \
+    curl -m 120 -s -o /dev/null https://bugzilla.mozilla.org/show_bug.cgi?id=$bug) >> /home/jlebar/Desktop/bugzilla-times

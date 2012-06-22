@@ -1,0 +1,5 @@
+#!/bin/bash
+
+infile="$1"
+outfile="$(basename "$1" | sed -e 's/\.[^.]\+$//').mp3"
+ffmpeg -i "$infile" "$outfile"

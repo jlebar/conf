@@ -1,0 +1,4 @@
+#!/bin/bash
+
+adb install -r dist/fennec-*.apk
+mobile-run

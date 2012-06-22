@@ -1,0 +1,36 @@
+Things I'm trying to remember:
+
+ssh-add -d
+  Forget my authorized keys
+
+xclip
+
+$!       last argument in last command
+/ and ?  search bash command-line history in Vi mode
+         (also n and N)
+
+gdb define command
+gdb display
+
+$ jobs
+
+$ abcde -a cddb,read,encode,tag,move,clean -o flac:"--best"
+
+Rebase MQ patches:
+$ hg up --rev <rev where patches apply>
+$ hg qpush
+$ hg rebase -d <tip of pulled head>
+
+# Forward 10.250.49.175:5900 (VNC port) to localhost:4242 through build-vpn.mozilla.com
+$ ssh -L 4242:10.250.49.175:5900 build-vpn.mozilla.com
+
+The release mozconfig is at
+
+  hg.mozilla.org/build/buildbot-configs/mozilla2/---/mozilla-release/release
+
+pdftk foo.pdf bar.pdf cat output foobar.pdf
+
+nsIDebug.break for causing one to break into the debugger.
+
+XPCOM_DEBUG_BREAK=break gdb --args firefox
+XPCOM_DEBUG_BREAK=trap firefox  # will crash on assertion

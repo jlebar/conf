@@ -1,0 +1,42 @@
+#!/usr/bin/python
+import sys, os
+from subprocess import Popen
+
+# These are annoying files that you probably don't care about.
+blacklist = \
+  ['testing/mozmill/simplejson-2.1.1/docs/searchindex.js',
+   'testing/mozmill/simplejson-2.1.1/docs/_static/jquery.js',
+   'testing/mozmill/simplejson-2.1.1/docs/_static/interface.js',
+   'testing/mozmill/mozmill-1.4.1/mozmill/extension/content/jquery/jquery-ui-1.7.1.custom.min.js',
+   'testing/mozmill/mozmill-1.4.1/mozmill/extension/content/jquery/jquery-1.3.2.min.js',
+   'testing/mozmill/mozmill-1.4.1/mozmill/extension/content/editarea/edit_area/edit_area_full.js',
+   'testing/mozmill/mozmill-1.4.1/mozmill/extension/content/editarea/edit_area/reg_syntax/php.js',
+   'testing/mozmill/mozmill-1.4.1/mozmill/extension/content/editarea/edit_area/edit_area_full_with_plugins.js',
+   'testing/mozmill/mozmill-1.4.1/docs/_build/html/_static/jquery.js',
+   'js/src/jit-test/tests/sunspider/check-string-unpack-code.js',
+   'js/src/trace-test/tests/sunspider/check-string-unpack-code.js',
+   'js/src/metrics/jint/sunspider/string-unpack-code.js',
+   'js/src/t/string-unpack-code.js']
+
+def run():
+  if len(sys.argv) > 1:
+    if sys.argv[1] == "*":
+      types = []
+    else:
+      types = sys.argv[1:]
+  else:
+    types = ['c', 'cpp', 'h', 'idl', 'js', 'xml']
+
+  types = map(lambda x: "-name *." + x, types)
+  typesStr = " -or ".join(list(types))
+
+  blacklistStr = " -or ".join(list(map(lambda x: "-wholename *" + x, blacklist)))
+
+  cmd = "find . ( -name '.?*' -prune ) -or ( ( %s ) -and -not ( %s ) -print )" % (typesStr, blacklistStr)
+  Popen(cmd.split()).communicate()
+
+try:
+  run()
+except KeyboardInterrupt:
+  # do nothing
+  sys.exit(0)

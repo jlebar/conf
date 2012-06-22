@@ -1,0 +1,104 @@
+#!/usr/bin/python
+
+import os
+import sys
+from select import select
+from subprocess import Popen, PIPE
+
+def print_process(proc):
+    """ Wrap proc's stderr and stdout pipes.
+
+    stdout is printed to the terminal as normal.
+
+    stderr is colored before it's printed.  Additionally, we look for lines in
+    stderr which contain 'error: '.  These lines are bolded when they're
+    printed to the terminal.
+
+    We keep track of a run of uninterrupted stderr output in cur_stderr, and if
+    that run contains a line containing 'error: ', we set was_error to true.
+    Then when the run ends (because we print to stdout), we remember the whole
+    run if was_error is true.  Once the process finishes (or it closes both its
+    pipes), we print a summary of all the stderr runs which contain 'error: '.
+
+    """
+
+    try:
+        from termcolor import colored
+        has_colored = True
+    except:
+        has_colored = False
+
+    # This is uglier than I'd like...
+    was_error = False
+    cur_stderr = []
+    saved_errors = []
+
+    pipes = [proc.stdout, proc.stderr]
+    while pipes:
+        r,w,x = select(pipes, [], pipes)
+        if x:
+            sys.stdout.write('Pipe(s) returned an error: %s\n' % x)
+        for pipe in r:
+            line = pipe.readline()
+            if not line:
+                pipes.remove(pipe)
+                continue
+            if pipe == proc.stdout:
+                if was_error and cur_stderr:
+                    saved_errors.append(cur_stderr)
+                cur_stderr = []
+                was_error = False
+                sys.stdout.write(line)
+            elif pipe == proc.stderr:
+                if 'error: ' in line:
+                    attrs = ['bold']
+                    was_error = True
+                else:
+                    attrs = []
+                if has_colored:
+                    cur_stderr.append(colored(line, attrs=attrs))
+                    sys.stdout.write(colored(line, 'red', attrs=attrs))
+                else:
+                    cur_stderr.append(line)
+                    sys.stdout.write('*** ' + line)
+
+    # Don't add the last error to the summary unless there are other errors to
+    # report.  We want to avoid the situation where the build ends with an
+    # error followed by no stdout, and we just parrot back that same error.
+    if was_error and cur_stderr and saved_errors:
+        saved_errors.append(cur_stderr)
+
+    if saved_errors:
+        print('\n\n***** Error summary *****\n')
+        print('\n----------\n\n'.join([''.join(x) for x in saved_errors]))
+
+    proc.wait()
+    return proc.returncode
+
+def play_sound(sound):
+    try:
+        proc = Popen(['ogg123', '-q', os.path.join(os.path.dirname(sys.argv[0]), sound + '.ogg')])
+    except:
+        pass
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print('Usage: %s ARGS' % sys.argv[0])
+        sys.exit(1)
+
+    if sys.argv[1] == '-q':
+        quiet = True
+        args = sys.argv[2:]
+    else:
+        quiet = False
+        args = sys.argv[1:]
+
+    proc = Popen(['nice'] + args, stderr=PIPE, stdout=PIPE)
+
+    return_code = print_process(proc)
+    if not quiet and return_code == 0:
+        play_sound('success')
+    elif return_code != 0:
+        play_sound('fail')
+
+    sys.exit(return_code)

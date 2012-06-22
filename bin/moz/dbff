@@ -1,0 +1,30 @@
+#!/bin/bash
+
+export MOZ_QUIET=1
+
+# Try to figure out if we're on Mac or Linux.
+
+app=$(ls dist | grep '\.app$')
+if [[ "$app" == "" ]]; then
+ # Linux
+ ff_dir="dist/bin"
+else
+ # Mac
+ ff_dir="dist/$app/Contents/MacOS"
+fi
+
+if [[ "$1" == "-g" ]]; then
+ shift
+ debug_prefix='gdb --args'
+fi
+
+if [[ -e $ff_dir/firefox ]]; then
+ $debug_prefix $ff_dir/firefox -P dev -no-remote $@
+elif [[ -e $ff_dir/b2g ]]; then
+ gaia_dir="$HOME/code/moz/B2G/gaia"
+ if [[ ! -d "$gaia_dir" ]]; then
+   gaia_dir="$HOME/code/moz/gaia"
+ fi
+ make -C "$gaia_dir"
+ GAIA="$gaia_dir" $debug_prefix $ff_dir/b2g -profile $gaia_dir/profile
+fi

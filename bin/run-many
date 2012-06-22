@@ -1,0 +1,65 @@
+#!/usr/bin/python
+
+"""Runs the given command on the given set of machines."""
+
+import sys
+import os
+import re
+import time
+from subprocess import Popen, PIPE
+from select import select
+from getpass import getpass
+from optparse import OptionParser
+
+parser = OptionParser(
+  usage="usage: %prog --hosts=\"host1 host2\" remote-script",
+  description=__doc__)
+parser.add_option("--hosts", action="store", type="string", dest="hosts",
+                  help="Space-separated list of hosts on which to run the command.")
+(options, remote_script) = parser.parse_args()
+if not remote_script:
+  parser.error("Must specify a remote script.")
+options.hosts = options.hosts.split()
+if not options.hosts:
+  parser.error("Must specify at least one remote host.")
+
+password = getpass()
+
+procs=[]
+for hostname in options.hosts:
+  cmd = ["sshpass", "-e", "ssh", hostname, "-o", "ConnectTimeout=15"] + \
+        remote_script
+  proc = Popen(cmd, stdout=PIPE, env={"SSHPASS":password})
+  procs.append((hostname, proc))
+
+# Wait for all processes to finish.  If some processes don't finish in time,
+# kill them.
+maxWait = 15
+startTime = time.time()
+while time.time() - startTime < maxWait:
+  time.sleep(.5)
+  allFinished = True
+
+  # Call p.poll on all procs.
+  unfinished = []
+  for hostname, proc in procs:
+    proc.poll()
+    if proc.returncode is None:
+      unfinished += [hostname]
+  if unfinished:
+    print("Waiting on %s." % unfinished)
+    pass
+  else:
+    print("Finished early!")
+    break
+
+for (hostname,proc) in procs:
+  proc.poll()
+  if proc.returncode is None:
+    try:
+      print("Killing proc %d connected to %s." % (proc.pid, hostname))
+      proc.kill()
+    except Exception, e:
+      print("Could not kill proc %d: %s" % (proc.pid, e))
+
+
