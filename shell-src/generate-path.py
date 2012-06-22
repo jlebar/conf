@@ -6,8 +6,7 @@ mypath = ['%s/bin' % os.environ['HOME'],
           '%s/bin' % os.environ['CONFDIR'],
           '%s/bin/moz' % os.environ['CONFDIR'],
           '%s/bin/android-tools' % os.environ['CONFDIR'],
-          '%s/bin/android-platform-tools' % os.environ['CONFDIR'],
-          '%s/code/moz/git-tools' % os.environ['HOME']]
+          '%s/bin/android-platform-tools' % os.environ['CONFDIR']]
 
 if __name__ == '__main__':
     if os.path.exists('/opt/local/bin'):
