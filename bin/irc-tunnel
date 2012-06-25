@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ssh -L 11588:localhost:11588 jlebar@people.mozilla.org
+ssh -L 11588:localhost:11588 -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" jlebar@people.mozilla.org
 #AUTOSSH_LOGLEVEL=7 autossh -f -L 11588:localhost:11588 jlebar@people.mozilla.org
