@@ -4,3 +4,7 @@ source $CONFDIR/shell-src/moz-dirs.sh
 
 PROMPT_COLOR="34m"
 alias ls="ls -G"
+
+if [ -f /opt/local/etc/bash_completion ]; then
+  . /opt/local/etc/bash_completion
+fi
