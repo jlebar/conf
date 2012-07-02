@@ -28,4 +28,3 @@ submodule bzexport http://hg.mozilla.org/users/tmielczarek_mozilla.com/bzexport
 submodule mqext https://bitbucket.org/sfink/mqext
 submodule qbackout https://bitbucket.org/sfink/qbackout
 submodule t https://jlebar@bitbucket.org/sjl/t
-submodule search_plugin https://jlebar@bitbucket.org/jlebar/search_plugin
