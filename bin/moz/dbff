@@ -25,6 +25,6 @@ elif [[ -e $ff_dir/b2g ]]; then
  if [[ ! -d "$gaia_dir" ]]; then
    gaia_dir="$HOME/code/moz/gaia"
  fi
- make -C "$gaia_dir"
+ make -C "$gaia_dir" && \
  GAIA="$gaia_dir" $debug_prefix $ff_dir/b2g -profile $gaia_dir/profile
 fi

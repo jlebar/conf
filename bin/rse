@@ -77,7 +77,7 @@ def print_process(proc):
 
 def play_sound(sound):
     try:
-        proc = Popen(['ogg123', '-q', os.path.join(os.path.dirname(sys.argv[0]), sound + '.ogg')])
+        proc = Popen(['play', '-q', '-v', '.4', os.path.join(os.path.dirname(sys.argv[0]), sound + '.ogg')])
     except:
         pass
 
