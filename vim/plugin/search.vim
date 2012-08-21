@@ -1,1 +1,1 @@
-../search_plugin/search.vim
+../../.hg-submodules/search_plugin/search.vim
