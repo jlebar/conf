@@ -123,3 +123,12 @@ set modeline
 
 set statusline=%f\ %y\ %([%R%M]%)\ %=#%n\ %l/%L,%c%V
 set laststatus=2
+
+function! Review()
+  %!reorder-patch --stat
+  silent %s/^/>
+  set filetype=review
+  normal! gg
+endfunction
+
+command! Review :call Review()
