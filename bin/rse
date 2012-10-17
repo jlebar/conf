@@ -2,6 +2,7 @@
 
 import os
 import sys
+import platform
 from select import select
 from subprocess import Popen, PIPE
 
@@ -81,6 +82,18 @@ def play_sound(sound):
     except:
         pass
 
+def has_caffeinate():
+    try:
+        # Don't even try to run caffeinate if we're not on mac.  Maybe your
+        # system has some other program with the same name!
+        if not platform.mac_ver():
+            return False
+
+        proc = Popen(['caffeinate', '-h'], stdout=PIPE, stderr=PIPE)
+        return True
+    except:
+        return False
+
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         print('Usage: %s ARGS' % sys.argv[0])
@@ -92,6 +105,10 @@ if __name__ == '__main__':
     else:
         quiet = False
         args = sys.argv[1:]
+
+    # caffeinate if we're on mac (to prevent the device from sleeping)
+    if has_caffeinate():
+        args = ['caffeinate'] + args
 
     proc = Popen(['nice'] + args, stderr=PIPE, stdout=PIPE)
 
