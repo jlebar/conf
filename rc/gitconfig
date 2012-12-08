@@ -10,7 +10,7 @@
         ci = commit
         br = branch
         co = checkout
-        lg = log -p
+        lg = log --pretty=oneline
         df = diff -U8 --patience -M -C
         dif = diff -U8 --patience -M -C
 
