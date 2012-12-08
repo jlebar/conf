@@ -125,8 +125,8 @@ set statusline=%f\ %y\ %([%R%M]%)\ %=#%n\ %l/%L,%c%V
 set laststatus=2
 
 function! Review()
-  %!reorder-patch --stat
-  silent %s/^/>
+  %!reorder-patch --stat --add-whitespace
+  silent %s/^./>\0
   set filetype=review
   normal! gg
 endfunction
