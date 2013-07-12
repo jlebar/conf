@@ -1,0 +1,3 @@
+#!/bin/bash
+
+adb logcat | grep -v --line-buffered '^./\(ONCRPC\|Sensors\|HWComposer\|Diag_Lib\|QCRIL\)'
