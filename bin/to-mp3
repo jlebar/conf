@@ -2,4 +2,4 @@
 
 infile="$1"
 outfile="$(basename "$1" | sed -e 's/\.[^.]\+$//').mp3"
-ffmpeg -i "$infile" "$outfile"
+avconv -i "$infile" -acodec libmp3lame "$outfile"
