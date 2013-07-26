@@ -137,3 +137,5 @@ endfunction
 
 command! Review :call Review()
 command! Github :call Github()
+
+"execute pathogen#infect()
