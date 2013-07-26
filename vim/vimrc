@@ -131,4 +131,9 @@ function! Review()
   normal! gg
 endfunction
 
+function! Github()
+  execute "!git remote-link " . expand('%') . ":" . line(".")
+endfunction
+
 command! Review :call Review()
+command! Github :call Github()
