@@ -89,6 +89,7 @@ augroup END
 autocmd FileType * setlocal expandtab|setlocal shiftwidth=2|setlocal softtabstop=2
 autocmd FileType make setlocal noexpandtab|setlocal softtabstop=0
 autocmd FileType python setlocal softtabstop=4|setlocal shiftwidth=4
+autocmd BufRead *.jsm set filetype=javascript
 
 " Case-insensitive searches, *unless* our our query contains an upper-case
 " character.

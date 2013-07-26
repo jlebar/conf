@@ -3,8 +3,10 @@ export USE_QTOP_PROMPT=1
 source $CONFDIR/shell-src/moz-dirs.sh
 
 PROMPT_COLOR="34m"
-alias ls="ls -G"
+alias ls="ls --color"
 
-if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
-    . /opt/local/etc/profile.d/bash_completion.sh
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
 fi
+
+export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
