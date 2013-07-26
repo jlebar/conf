@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+"""Add up all the numbers on stdin."""
+
+import sys
+
+if __name__ == '__main__':
+    sum = 0
+    for l in sys.stdin:
+        split = l.split()
+        for x in split:
+            sum += int(x)
+    print sum
