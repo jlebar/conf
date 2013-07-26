@@ -4,9 +4,10 @@
 
 [core]
         excludesfile = ~/.gitignore
+        deltaBaseCacheLimit = 1G
 
 [alias]
-        st = status
+        st = status -s
         ci = commit
         br = branch
         co = checkout
@@ -29,3 +30,6 @@
         firefox-profile = default
 [push]
 	default = matching
+
+[diff]
+        algorithm = histogram
