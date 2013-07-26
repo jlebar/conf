@@ -29,7 +29,6 @@ if [ -d "${HOME}/bin" ] ; then
   PATH=${HOME}/bin:${PATH}
 fi
 
-
 # Set MANPATH so it includes user's private man if it exists
 # if [ -d "${HOME}/man" ]; then
 #   MANPATH=${HOME}/man:${MANPATH}

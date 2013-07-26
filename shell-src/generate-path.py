@@ -1,29 +1,27 @@
 #!/usr/bin/env python
 
 import os
-
-mypath = ['%s/bin' % os.environ['HOME'],
-          '%s/bin' % os.environ['CONFDIR'],
-          '%s/bin/moz' % os.environ['CONFDIR'],
-          '%s/bin/android-tools' % os.environ['CONFDIR'],
-          '%s/bin/android-platform-tools' % os.environ['CONFDIR'],
-          '%s/git-tools' % os.environ['CONFDIR']]
+from os import listdir, environ
+from os.path import abspath, normpath, isdir
+from itertools import chain
 
 if __name__ == '__main__':
-    if os.path.exists('/opt/local/bin'):
-        mypath.insert(0, '/opt/local/bin')
+    # Add $HOME/bin, $CONFDIR/bin, and all their subdirectories (including
+    # symlinked subdirs) to the path.
+    root_dirs = map(abspath,
+                    [os.path.join(environ['HOME'], 'bin'),
+                     os.path.join(environ['CONFDIR'], 'bin')])
 
-    path = os.environ['PATH']
+    # TODO: Should also modify the MANPATH.
+    # MANPATH="/usr/local/opt/coreutils/libexec/gnuman"
 
-    # Set newpathlist to path, without duplicates.
-    newpathlist = []
-    for p in path.split(':'):
-        if p not in newpathlist:
-            newpathlist.append(p)
+    new_path = filter(os.path.isdir,
+                      ['/usr/local/bin', '/usr/local/opt/coreutils/libexec/gnubin'])
 
-    for p in mypath:
-        if p not in newpathlist:
-            # Add p to the *front* of newpathlist.
-            newpathlist = [p] + newpathlist
+    for r in filter(isdir, root_dirs):
+        new_path.append(r)
+        new_path += filter(isdir, [os.path.join(r, d) for d in listdir(r)])
 
-    print ':'.join(newpathlist)
+    new_path += [d for d in environ['PATH'].split(':') if d not in new_path]
+
+    print ':'.join(new_path)
