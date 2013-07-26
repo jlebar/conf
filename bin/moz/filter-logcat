@@ -1,3 +1,3 @@
 #!/bin/bash
 
-adb logcat | grep -v --line-buffered '^./\(ONCRPC\|Sensors\|HWComposer\|Diag_Lib\|QCRIL\|wpa_supplicant\)'
+adb logcat -v time | grep -v --line-buffered '^./\(ONCRPC\|memalloc\|Sensors\|HWComposer\|Diag_Lib\|QCRIL\|wpa_supplicant\|IdleService\)'

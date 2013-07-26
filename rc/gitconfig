@@ -1,6 +1,6 @@
 [user]
-	name = Justin Lebar
-	email = justin.lebar@gmail.com
+        name = Justin Lebar
+        email = justin.lebar@gmail.com
 
 [core]
         excludesfile = ~/.gitignore
@@ -12,14 +12,14 @@
         br = branch
         co = checkout
         lg = log --pretty=oneline
-        df = diff -U8 --patience -M -C
-        dif = diff -U8 --patience -M -C
+        df = diff -U8 --histogram -M -C
+        dif = diff -U8 --histogram -M -C
 
 [color]
-	ui = true
+        ui = true
 
 [rerere]
-	enabled = 1
+        enabled = 1
 
 [branch]
         autosetuprebase = always
@@ -28,6 +28,7 @@
         default-tracker = bugzilla.mozilla.org
         default-component = Core
         firefox-profile = default
+
 [push]
 	default = matching
 
