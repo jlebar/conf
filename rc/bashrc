@@ -7,7 +7,7 @@ export CONFDIR=$HOME/conf
 export EDITOR=vim
 export CCACHE_BASEDIR=$HOME
 export CCACHE_HARDLINK=1
-export CCACHE_SLOPPINESS="file_stat_matches"
+export CCACHE_SLOPPINESS="file_stat_matches,time_macros"
 export ANDROID_SDK=$HOME/code/moz/android-sdk-linux_x86
 export ANDROID_NDK=$HOME/code/moz/android-ndk-r6
 
