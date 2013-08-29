@@ -4,9 +4,9 @@ echo "Starting backup at `date`"
 
 cd $(dirname $0)
 TMP=`mktemp`
-./nas-backup &> $TMP
-
 DATE=`date --rfc-3339=date`
+
+./nas-backup &> $TMP
 if [ $? -ne 0 ]; then
   OUTFILE=/home/jlebar/Desktop/backup-FAILURE-$DATE
   echo "Backup failure on `date`" > $OUTFILE
