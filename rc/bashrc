@@ -1,5 +1,5 @@
 # TODO: Set CONFDIR automatically.  dirname $0 is insufficient.
-export CONFDIR=$HOME/conf
+export CONFDIR="$HOME/conf"
 
 # Make sure that our path is right.
 . $CONFDIR/shell-src/set-path.sh
