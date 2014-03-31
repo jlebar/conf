@@ -10,7 +10,7 @@ NAS_HOSTNAME="192.168.1.101"
 LARGE_DRIVE="/media/hdd/jlebar"
 RSYNC_FLAGS="--human-readable -a -v"
 RSYNC_LINK_FLAGS="--link-dest=/c/backup/jlebar-external/last-backup"
-RSYNC_EXCLUDES='--exclude=virtual-machines'
+RSYNC_EXCLUDES="--exclude-from=$LARGE_DRIVE/backup-exclude"
 DATE=`date --rfc-3339=date`
 
 NAS_BACKUP_LOCATION="jlebar@$NAS_HOSTNAME:/c/backup/jlebar-external/$DATE"

@@ -1,3 +1,4 @@
 .hg-submodules
 vim/.*
 *.pyc
+notion/*/saved*.lua

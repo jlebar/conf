@@ -13,9 +13,6 @@ qapplied = -v
 qstatus = status --rev qtip^
 qedit = !S=$(hg root)/.hg/patches/series; cp $S $S.bak && perl -pale 'BEGIN { chomp(@a = qx(hg qapplied -q)); die if $?; @a{@a}=(); }; s/^/# (applied) / if exists $a{$F[0]}' $S > $S.new && ${EDITOR-vim} $S.new && sed -e 's/^# .applied. //' $S.new > $S
 
-[hooks]
-post-push = hg phase --force --draft "mq()"
- 
 [extensions]
 mq =
 graphlog =

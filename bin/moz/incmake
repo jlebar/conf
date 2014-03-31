@@ -8,8 +8,14 @@ from subprocess import Popen, PIPE
 all_quiet = False
 def build(dir, quiet):
   print("@@@ Building in %s" % dir)
-  cmd = "rse %s make -j%d" % ('-q' if quiet or all_quiet
-                                   else '', multiprocessing.cpu_count() * 2)
+
+  # Hack: We have to do |make libs -C toolkit/library|; see bug 809430
+  # comment 40.
+  cmd = "rse %s make -j%d %s" % \
+        ('-q' if quiet or all_quiet else '',
+         multiprocessing.cpu_count() * 2,
+         'libs' if dir == 'toolkit/library' else '')
+
   proc = Popen(cmd.split(), cwd=dir)
   proc.wait()
 
