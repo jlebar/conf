@@ -1,3 +1,11 @@
+" perdirvimrc likes to execute my vimrc twice, which breaks things.
+if exists("jlebar_vimrc_loaded")
+  finish
+endif
+let jlebar_vimrc_loaded = 1
+
+filetype plugin indent on
+
 syntax on
 set nocompatible
 set t_Co=256
@@ -43,7 +51,6 @@ set wrap
 set linebreak
 setlocal encoding=utf-8
 
-
 set hlsearch  " highlight searches
 set incsearch " incremental search
 set gdefault  " append /g to find/replace by default
@@ -51,12 +58,12 @@ set gdefault  " append /g to find/replace by default
 noremap <leader><space> :nohl<cr>
 
 " Very magic searches by default.
-nnoremap / /\v
-vnoremap / /\v
+"nnoremap / /\v
+"vnoremap / /\v
 
-filetype plugin on
-filetype indent on
-filetype on " taglist plugin needs filetype detection
+"filetype plugin on
+"filetype indent on
+"filetype on " taglist plugin needs filetype detection
 
 " Auto-format comments with gq
 set formatoptions=q
@@ -71,7 +78,7 @@ noremap <leader>8 :vertical resize 80<CR>
 noremap <leader>f gwap
 
 " \c scrolls so the cursor is 5 lines from the top of the screen
-noremap <leader>c z<CR> 5<C-y>
+noremap <leader>t z<CR> 5<C-y>
 
 " wildmenu for file open tab completion.  Press ^D to see contents of current
 " dir.
@@ -81,15 +88,16 @@ set wildignore=*.o,*.obj,*.bak,*.exe,*.class,*.pyc,*.pyo
 "set verbose=9
 
 " Define spacehi in a group so it can be disabled.
-augroup SPACEHI
+augroup vimrc_autocmd
+  autocmd!
   autocmd FileType * SpaceHi
   autocmd FileType help NoSpaceHi
-augroup END
 
-autocmd FileType * setlocal expandtab|setlocal shiftwidth=2|setlocal softtabstop=2
-autocmd FileType make setlocal noexpandtab|setlocal softtabstop=0
-autocmd FileType python setlocal softtabstop=4|setlocal shiftwidth=4
-autocmd BufRead *.jsm set filetype=javascript
+  autocmd FileType * setlocal expandtab|setlocal shiftwidth=2|setlocal softtabstop=2
+  autocmd FileType make setlocal noexpandtab|setlocal softtabstop=0
+  "autocmd FileType python setlocal softtabstop=4|setlocal shiftwidth=4
+  autocmd BufRead *.jsm set filetype=javascript
+augroup END
 
 " Case-insensitive searches, *unless* our our query contains an upper-case
 " character.
@@ -107,7 +115,6 @@ noremap <leader>h :TlistHighlightTag<cr>
 "let Tlist_Auto_Highlight_Tag = 0
 
 if has("gui_running")
-
 endif
 
 " set display+=lastline " not sure what this does
@@ -125,18 +132,38 @@ set modeline
 set statusline=%f\ %y\ %([%R%M]%)\ %=#%n\ %l/%L,%c%V
 set laststatus=2
 
-function! Review()
-  %!reorder-patch --stat --add-whitespace
-  silent %s/^./>\0
-  set filetype=review
-  normal! gg
+" Don't display errors that require me to press <enter>.  Hopefully.
+" See ycm-users thread entitled
+"
+"   Is there anyway to make the "ValueError" line NOT display
+"   when I open a new file?
+set cmdheight=2
+set shortmess=a
+
+function! CodeSearch()
+  execute ":silent !csweb " . expand('%') . " " . line(".")
+  redraw!
 endfunction
+command! CS :call CodeSearch()
+noremap <leader>t :CS<CR>
 
-function! Github()
-  execute "!git remote-link " . expand('%') . ":" . line(".")
-endfunction
+noremap <leader>f :ClangFormat<CR>
 
-command! Review :call Review()
-command! Github :call Github()
+" <leader>z scrolls so the current line is 10 lines away from the top of the
+" buffer.
+noremap <leader>z z<CR>10<C-Y>
 
-"execute pathogen#infect()
+execute pathogen#infect()
+
+" Don't highlight C++11 initializer lists in red.
+let c_no_curly_error=1
+let g:ycm_enable_diagnostic_signs=0
+let g:ycm_always_populate_location_list=1
+noremap <leader>c :YcmForceCompileAndDiagnostics<cr>
+
+"" Google-specific stuff
+source /usr/share/vim/google/google.vim
+Glug youcompleteme-google
+Glug grok
+" Disable YCM's autocomplete buffer thingy at the top of the screen.
+set completeopt-=preview
