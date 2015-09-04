@@ -26,11 +26,6 @@
 [branch]
         autosetuprebase = always
 
-[bz]
-        default-tracker = bugzilla.mozilla.org
-        default-component = Core
-        firefox-profile = default
-
 [push]
 	default = matching
 
