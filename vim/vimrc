@@ -33,18 +33,18 @@ nnoremap <buffer> k gk
 nnoremap <buffer> j gj
 nnoremap <buffer> <Up> gk
 nnoremap <buffer> <Down> gj
-nnoremap <buffer> 0 g0
-nnoremap <buffer> ^ g^
-nnoremap <buffer> $ g$
+"nnoremap <buffer> 0 g0
+"nnoremap <buffer> ^ g^
+"nnoremap <buffer> $ g$
 inoremap <buffer> <Up> <C-O>gk
 inoremap <buffer> <Down> <C-O>gj
 vnoremap <buffer> k gk
 vnoremap <buffer> j gj
 vnoremap <buffer> <Up> gk
 vnoremap <buffer> <Down> gj
-vnoremap <buffer> 0 g0
-vnoremap <buffer> ^ g^
-vnoremap <buffer> $ g$
+"vnoremap <buffer> 0 g0
+"vnoremap <buffer> ^ g^
+"vnoremap <buffer> $ g$
 
 " Break lines at word boundaries
 set wrap
@@ -91,13 +91,19 @@ set wildignore=*.o,*.obj,*.bak,*.exe,*.class,*.pyc,*.pyo
 augroup vimrc_autocmd
   autocmd!
   autocmd FileType * SpaceHi
-  autocmd FileType help NoSpaceHi
+  autocmd FileType help,go NoSpaceHi
 
   autocmd FileType * setlocal expandtab|setlocal shiftwidth=2|setlocal softtabstop=2
   autocmd FileType make setlocal noexpandtab|setlocal softtabstop=0
   "autocmd FileType python setlocal softtabstop=4|setlocal shiftwidth=4
   autocmd BufRead *.jsm set filetype=javascript
+  autocmd BufNewFile,BufRead *.md setfiletype markdown
+  autocmd BufNewFile,BufRead *.md setlocal textwidth=80
 augroup END
+
+autocmd FileType go setlocal tabstop=2|setlocal showbreak=…
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+
 
 " Case-insensitive searches, *unless* our our query contains an upper-case
 " character.
@@ -149,6 +155,9 @@ noremap <leader>t :CS<CR>
 
 noremap <leader>f :ClangFormat<CR>
 
+" Sort current paragraph.
+noremap <leader>i vip :sort u<CR>
+
 " <leader>z scrolls so the current line is 10 lines away from the top of the
 " buffer.
 noremap <leader>z z<CR>10<C-Y>
@@ -165,5 +174,14 @@ noremap <leader>c :YcmForceCompileAndDiagnostics<cr>
 source /usr/share/vim/google/google.vim
 Glug youcompleteme-google
 Glug grok
+Glug whitespace !highlight
+Glug codefmt gofmt_executable="goimports"
+Glug codefmt-google
+
+Glug blazedeps auto_filetypes=`['go']`
+
+autocmd FileType go AutoFormatBuffer gofmt
+autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
+
 " Disable YCM's autocomplete buffer thingy at the top of the screen.
 set completeopt-=preview

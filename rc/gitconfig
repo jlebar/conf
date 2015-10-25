@@ -1,19 +1,24 @@
 [user]
         name = Justin Lebar
-        email = justin.lebar@gmail.com
+        email = jlebar@google.com
 
 [core]
         excludesfile = ~/.gitignore
-        deltaBaseCacheLimit = 1G
+	deltaBaseCacheLimit = 1G
 
 [alias]
         st = status -s
         ci = commit
         br = branch
         co = checkout
-        lg = log --pretty=oneline
+        lg = log --oneline
         df = diff -U8 --histogram -M -C
         dif = diff -U8 --histogram -M -C
+        rbc = rebase --continue
+
+        caa = commit -a --amend --no-edit
+        ca = commit --amend --no-edit
+	branches = recent-branches --ignore 'm--.*'
 
 [color]
         ui = true
@@ -29,3 +34,16 @@
 
 [diff]
         algorithm = histogram
+[multi]
+	exporttags = default
+	lgtm-msg-read = yes
+        fully-random-branch-names = true
+        new-cl-export-sleep-secs = 10
+[merge]
+	tool = meldscript
+[mergetool "meldscript"]
+	cmd = git_merge_meld.sh $LOCAL $BASE $REMOTE $MERGED
+	trustExitCode = true
+[alias "multi"]
+        su = "!f() { git multi submit \"$@\"; git prompt-to-delete-if-empty; }; f"
+        ex = "!f() { git multi export \"$@\"; git prompt-to-delete-if-empty; }; f"

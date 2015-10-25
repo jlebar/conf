@@ -17,6 +17,8 @@ termcapinfo xterm* ti@:te@
 termcapinfo cygwin* ti@:te@
 
 defscrollback 8192
+# https://bugs.launchpad.net/ubuntu/+source/screen/+bug/600999
+defnonblock on
 shell -$SHELL
 
 #### 256 color support
