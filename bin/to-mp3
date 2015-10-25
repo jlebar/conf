@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Use gsed, if it exists.
+sed="$(which gsed sed | head -n1)"
+
 infile="$1"
-outfile="$(basename "$1" | sed -e 's/\.[^.]\+$//').mp3"
-avconv -i "$infile" -acodec libmp3lame "$outfile"
+outfile="$(dirname "$1")/$(basename "$1" | $sed -e 's/\.[^.]\+$//').mp3"
+ffmpeg -i "$infile" -acodec libmp3lame -q:a 0 "$outfile"

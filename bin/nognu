@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# This script strips out /usr/local/opt/coreutils/libexec/gnubin from PATH and
+# then runs whatever you passed in.
+
+PATH="$(echo $PATH | sed -E -e 's!(^|:)/usr/local/opt/coreutils/libexec/gnubin($|:)!\1!')" $@

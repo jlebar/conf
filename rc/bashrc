@@ -63,7 +63,7 @@ vcs_branchname() {
 }
 
 if [[ "$PROMPT_COLOR" == "" ]]; then
-  PROMPT_COLOR="35m"
+  PROMPT_COLOR="31m"
 fi
 
 PROMPT_COMMAND='MERCURIAL_QTOP=`vcs_branchname`'

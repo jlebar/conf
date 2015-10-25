@@ -5,6 +5,8 @@
 [core]
         excludesfile = ~/.gitignore
 	deltaBaseCacheLimit = 1G
+#        precomposeunicode = true
+#        trustctime = false
 
 [alias]
         st = status -s
