@@ -7,7 +7,7 @@
 
 function! FindMate(name)
  let l:_name = substitute(a:name, "\\s", "*", "g")
- let l:list=system("find . \\( -wholename '*/.*' -prune \\) -or \\( -iname '*".l:_name."*' -not -name \"*.swp\" -and -not -name \".*\" -and -not -name \"*.o\" -print \\) | sort -d | perl -ne 'print \"$.\\t$_\"'")
+ let l:list=system("find . \\( -wholename '*/.*' -prune \\) -or \\( -iname '*".l:_name."*' -not -name \"*.swp\" -and -not -name \".*\" -and -not -name \"*.o\" -and -not -name \"*.o.d\" -print \\) | sort -d | perl -ne 'print \"$.\\t$_\"'")
  let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 if l:num < 1
  echo "'".a:name."' not found"
