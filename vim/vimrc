@@ -75,10 +75,7 @@ noremap <leader>s :syn sync fromstart<CR>
 noremap <leader>8 :vertical resize 80<CR>
 
 " \f does gwap to reformat the current paragraph
-noremap <leader>f gwap
-
-" \c scrolls so the cursor is 5 lines from the top of the screen
-noremap <leader>t z<CR> 5<C-y>
+" noremap <leader>f gwap
 
 " wildmenu for file open tab completion.  Press ^D to see contents of current
 " dir.
@@ -151,7 +148,6 @@ function! CodeSearch()
   redraw!
 endfunction
 command! CS :call CodeSearch()
-noremap <leader>t :CS<CR>
 
 noremap <leader>f :ClangFormat<CR>
 
@@ -162,13 +158,23 @@ noremap <leader>i vip :sort u<CR>
 " buffer.
 noremap <leader>z z<CR>10<C-Y>
 
+" disable Ex mode (http://www.bestofvim.com/tip/leave-ex-mode-good/)
+nnoremap Q <nop>
+
+" Show linebreaks
+set showbreak=↪
+
+" Spell checking for git, svn commits.
+autocmd FileType gitcommit setlocal spell
+autocmd FileType svn       setlocal spell
+
 execute pathogen#infect()
 
 " Don't highlight C++11 initializer lists in red.
 let c_no_curly_error=1
 let g:ycm_enable_diagnostic_signs=0
 let g:ycm_always_populate_location_list=1
-noremap <leader>c :YcmForceCompileAndDiagnostics<cr>
+let g:ycm_extra_conf_globlist = ['~/code/llvm/src/.ycm_extra_conf.py']
 
 "" Google-specific stuff
 source /usr/share/vim/google/google.vim
@@ -185,3 +191,18 @@ autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
 
 " Disable YCM's autocomplete buffer thingy at the top of the screen.
 set completeopt-=preview
+
+" Custom matcher ranking for ctrlp.
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_max_files = 500000
+
+" Bindings for YCM awesomeness.  We use 't' rather than the perhaps more natural
+" 'y' because fingers.
+noremap <leader>tr :YcmRestartServer
+noremap <leader>tc :YcmForceCompileAndDiagnostics<cr>
+noremap <leader>td :YcmDiags<cr>
+noremap <leader>tg :YcmCompleter GoTo<cr>
+noremap <leader>tt :YcmCompleter GetType<cr>
+noremap <leader>tp :YcmCompleter GetParent<cr>
+
+noremap <leader>c  :YcmForceCompileAndDiagnostics<cr>
