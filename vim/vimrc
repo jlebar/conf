@@ -168,23 +168,26 @@ set showbreak=↪
 autocmd FileType gitcommit setlocal spell
 autocmd FileType svn       setlocal spell
 
-execute pathogen#infect()
-
 " Don't highlight C++11 initializer lists in red.
 let c_no_curly_error=1
 let g:ycm_enable_diagnostic_signs=0
 let g:ycm_always_populate_location_list=1
 let g:ycm_extra_conf_globlist = ['~/code/llvm/src/.ycm_extra_conf.py']
 
-"" Google-specific stuff
-source /usr/share/vim/google/google.vim
-Glug youcompleteme-google
-Glug grok
-Glug whitespace !highlight
-Glug codefmt gofmt_executable="goimports"
-Glug codefmt-google
+" Google-specific stuff
+if !empty(glob('/usr/share/vim/google/google.vim'))
+  source /usr/share/vim/google/google.vim
+  Glug youcompleteme-google
+  Glug grok
+  Glug whitespace !highlight
+  Glug codefmt gofmt_executable="goimports"
+  Glug codefmt-google
+  Glug blazedeps auto_filetypes=`['go']`
+  " Don't load the public YCM via pathogen.
+  g:pathogen_disabled = ['YouCompleteMe']
+endif
 
-Glug blazedeps auto_filetypes=`['go']`
+execute pathogen#infect()
 
 autocmd FileType go AutoFormatBuffer gofmt
 autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
