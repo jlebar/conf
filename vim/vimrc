@@ -183,8 +183,10 @@ if !empty(glob('/usr/share/vim/google/google.vim'))
   Glug codefmt gofmt_executable="goimports"
   Glug codefmt-google
   Glug blazedeps auto_filetypes=`['go']`
-  " Don't load the public YCM via pathogen.
-  g:pathogen_disabled = ['YouCompleteMe']
+  " Don't load the public YCM via pathogen.  We have to name the plugin
+  " 'YouCompleteMePublic' because there's a check in some config file for
+  " plugins named 'YouCompleteMe'.
+  let g:pathogen_disabled = ['YouCompleteMePublic']
 endif
 
 execute pathogen#infect()
