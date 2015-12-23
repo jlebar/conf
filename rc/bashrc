@@ -62,10 +62,6 @@ vcs_branchname() {
   fi
 }
 
-if [[ "$PROMPT_COLOR" == "" ]]; then
-  PROMPT_COLOR="31m"
-fi
-
 PROMPT_COMMAND='MERCURIAL_QTOP=`vcs_branchname`'
 PS1='\[\033[01;$PROMPT_COLOR\]\u@\h\[\033[00m\]:\[\033[01;$PROMPT_COLOR\]\w\[\033[00m\]$MERCURIAL_QTOP\$ '
 
@@ -135,3 +131,14 @@ if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
   export GOOGLE_CONFDIR="$HOME/.google_conf"
   source "$GOOGLE_CONFDIR/shell-src/google-dirs.sh"
 fi
+
+if [[ "$PROMPT_COLOR" == "" ]]; then
+  if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
+    PROMPT_COLOR="31m"
+  elif [[ "$HOSTNAME" == "jlebar-macbookpro2.roam.corp.google.com" ]]; then
+    PROMPT_COLOR="32m"
+  else
+    PROMPT_COLOR="34m"
+  fi
+fi
+
