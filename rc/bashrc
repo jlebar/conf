@@ -122,3 +122,16 @@ PERL_MB_OPT="--install_base \"/usr/local/google/home/jlebar/perl5\""; export PER
 PERL_MM_OPT="INSTALL_BASE=/usr/local/google/home/jlebar/perl5"; export PERL_MM_OPT;
 
 export GOPATH="$HOME/.gocode"
+
+# See https://wiki.corp.google.com/twiki/bin/view/Main/G4Recipes#Diff_Tools
+export P4DIFF=gitdiff
+#export P4MERGE=meldmerge
+export G4MULTIDIFF=1
+
+export USE_QTOP_PROMPT=1
+
+# Machine-specific stuff
+if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
+  export GOOGLE_CONFDIR="$HOME/.google_conf"
+  source "$GOOGLE_CONFDIR/shell-src/google-dirs.sh"
+fi
