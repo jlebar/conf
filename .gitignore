@@ -4,3 +4,5 @@ vim/cache
 vim/data
 *.pyc
 notion/*/saved*.lua
+xchat2/scrollback
+xchat2/xchatlogs
