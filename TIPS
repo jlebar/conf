@@ -17,3 +17,9 @@ $ jobs
 $ abcde -a cddb,read,encode,tag,move,clean -o flac:"--best"
 
 pdftk foo.pdf bar.pdf cat output foobar.pdf
+
+== For new machines ==
+
+* Disable blinking cursor in gnome-terminal
+
+    $ gconftool-2 --set /apps/gnome-terminal/profiles/Default/cursor_blink_mode --type string off
