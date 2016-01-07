@@ -112,7 +112,7 @@ HISTCONTROL=ignoredups
 # Save each history entry immediately (protects against terminal crashes/
 # disconnections, and interleaves commands from multiple terminals in correct
 # chronological order).
-PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 PERL_MB_OPT="--install_base \"/usr/local/google/home/jlebar/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/usr/local/google/home/jlebar/perl5"; export PERL_MM_OPT;
