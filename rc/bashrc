@@ -127,11 +127,6 @@ export G4MULTIDIFF=1
 export USE_QTOP_PROMPT=1
 
 # Machine-specific stuff
-if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
-  export GOOGLE_CONFDIR="$HOME/.google_conf"
-  source "$GOOGLE_CONFDIR/shell-src/google-dirs.sh"
-fi
-
 if [[ "$PROMPT_COLOR" == "" ]]; then
   if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
     PROMPT_COLOR="31m"
