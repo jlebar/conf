@@ -128,7 +128,8 @@ export USE_QTOP_PROMPT=1
 
 # Machine-specific stuff
 if [[ "$PROMPT_COLOR" == "" ]]; then
-  if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
+  if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" || \
+        "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
     PROMPT_COLOR="31m"
   elif [[ "$HOSTNAME" == "jlebar-macbookpro2.roam.corp.google.com" ]]; then
     PROMPT_COLOR="32m"
@@ -136,4 +137,3 @@ if [[ "$PROMPT_COLOR" == "" ]]; then
     PROMPT_COLOR="34m"
   fi
 fi
-
