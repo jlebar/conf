@@ -206,6 +206,7 @@ set completeopt-=preview
 " Custom matcher ranking for ctrlp.
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_max_files = 500000
+let g:ctrlp_clear_cache_on_exit = 0
 
 " Bindings for YCM awesomeness.  We use 't' rather than the perhaps more natural
 " 'y' because fingers.
