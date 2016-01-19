@@ -168,6 +168,12 @@ set showbreak=↪
 autocmd FileType gitcommit setlocal spell
 autocmd FileType svn       setlocal spell
 
+" Triple-slash comments are used in llvm.
+set comments^=:///
+" C/C++ syntax config seems to overwrite the set above, so do it again.
+autocmd FileType cpp       setlocal comments^=:///
+autocmd FileType c         setlocal comments^=:///
+
 " Don't highlight C++11 initializer lists in red.
 let c_no_curly_error=1
 let g:ycm_enable_diagnostic_signs=0
