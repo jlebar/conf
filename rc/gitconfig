@@ -50,3 +50,5 @@
 [alias "multi"]
         su = "!f() { git multi submit \"$@\"; git prompt-to-delete-if-empty; }; f"
         ex = "!f() { git multi export \"$@\"; git prompt-to-delete-if-empty; }; f"
+[clangformat]
+        style = "file"
