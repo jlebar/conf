@@ -1,0 +1,46 @@
+#!/usr/bin/python2.7
+
+from __future__ import print_function
+import os
+import stat
+import subprocess
+import sys
+
+
+REAL_ARC='/usr/local/google/home/jlebar/code/arcanist/bin/arc'
+
+
+def main():
+  if len(sys.argv) != 3 or sys.argv[1] != 'diff':
+    # Not "arc diff blah"; fall through.
+    return
+
+  try:
+    # TODO: This loses us color and pagination, but oh well.
+    diff = subprocess.check_output(['git', 'clang-format', '--diff', sys.argv[2]])
+  except subprocess.CalledProcessError:
+    yorn = raw_input('Error running git-clang-format.  Continue running arc? [yN] ')
+    if yorn.lower() == 'y':
+      return
+    sys.exit(1)
+
+  if not diff:
+    return
+
+  print('clang-format suggested the following changes:\n')
+  print(diff)
+
+  mode = os.fstat(sys.stdin.fileno()).st_mode
+  if stat.S_ISFIFO(mode) or stat.S_ISREG(mode):
+    print('Detected non-interactive mode.  Proceeding to arc diff...',
+          file=sys.stderr)
+    return
+
+  yorn = raw_input('Proceed with arc diff? [yN] ')
+  if yorn.lower() != 'y':
+    sys.exit(1)
+
+
+if __name__ == '__main__':
+  main()
+  os.execv(REAL_ARC, sys.argv)
