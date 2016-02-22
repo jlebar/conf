@@ -36,6 +36,7 @@
 
 [diff]
         algorithm = histogram
+	tool = meld
 [multi]
 	exporttags = default
 	lgtm-msg-read = yes
