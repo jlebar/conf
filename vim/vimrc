@@ -88,7 +88,7 @@ set wildignore=*.o,*.obj,*.bak,*.exe,*.class,*.pyc,*.pyo
 augroup vimrc_autocmd
   autocmd!
   autocmd FileType * SpaceHi
-  autocmd FileType help,go NoSpaceHi
+  autocmd FileType help,go,asm,diff NoSpaceHi
 
   autocmd FileType * setlocal expandtab|setlocal shiftwidth=2|setlocal softtabstop=2
   autocmd FileType make setlocal noexpandtab|setlocal softtabstop=0
@@ -173,6 +173,11 @@ set comments^=:///
 " C/C++ syntax config seems to overwrite the set above, so do it again.
 autocmd FileType cpp       setlocal comments^=:///
 autocmd FileType c         setlocal comments^=:///
+" ';' comments in asm, llvm.
+autocmd FileType llvm      setlocal comments^=:;
+autocmd FileType asm       setlocal comments^=:;
+" Matching < and > in C/C++ and asm (after demangling templates).
+" autocmd FileType c,cpp,asm setlocal matchpairs+=<:>
 
 " Don't highlight C++11 initializer lists in red.
 let c_no_curly_error=1
