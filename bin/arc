@@ -7,9 +7,6 @@ import subprocess
 import sys
 
 
-REAL_ARC='/usr/local/google/home/jlebar/code/arcanist/bin/arc'
-
-
 def main():
   if len(sys.argv) != 3 or sys.argv[1] != 'diff':
     # Not "arc diff blah"; fall through.
@@ -43,4 +40,5 @@ def main():
 
 if __name__ == '__main__':
   main()
-  os.execv(REAL_ARC, sys.argv)
+  real_arc = os.path.join(os.path.dirname(__FILE__), 'arc-real')
+  os.execv(real_arc, sys.argv)

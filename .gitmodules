@@ -31,3 +31,9 @@
 [submodule "vim/bundle/YouCompleteMe"]
 	path = vim/bundle/YouCompleteMePublic
 	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "libphutil"]
+	path = libphutil
+	url = https://github.com/phacility/libphutil.git
+[submodule "arcanist"]
+	path = arcanist
+	url = https://github.com/phacility/arcanist.git
