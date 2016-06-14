@@ -1,3 +1,6 @@
+# ycm_extra_conf file for llvm.  Copied from the YCM repository and modified to
+# work with llvm.  Its original license follows.
+
 # This file is NOT licensed under the GPLv3, which is the license for the rest
 # of YouCompleteMe.
 #
