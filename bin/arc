@@ -24,7 +24,7 @@ def main():
       return
     sys.exit(1)
 
-  if not diff:
+  if not diff or diff.strip() == 'clang-format did not modify any files':
     return
 
   print('clang-format suggested the following changes:\n')
