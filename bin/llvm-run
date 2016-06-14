@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Builds and runs an llvm binary (clang, opt, llc, llvm-dis, etc.).  Runs a
+# release binary by default, but alternatively lets you run a debug binary, or
+# run a debug binary under gdb or rr.
+#
+# Usage: llvm-run [--debug|--gdb|--rr] clang    [args]
+# Usage: llvm-run [--debug|--gdb|--rr] llvm-dis [args]
+# Usage: etc.
+
+debug=0
+run_under=""
+if [[ "$1" == "--debug" ]]; then
+  shift
+  debug=1
+elif [[ "$1" == "--gdb" ]]; then
+  shift
+  debug=1
+  run_under="gdb --args"
+elif [[ "$1" == "--rr" ]]; then
+  shift
+  debug=1
+  run_under="rr record"
+fi
+
+if [[ "$debug" == 0 ]]; then
+  build_dir="$HOME/code/llvm/release"
+else
+  build_dir="$HOME/code/llvm/debug"
+fi
+bin="$1"
+build_target="$bin"
+
+if [[ "$build_target" == "clang++" ]]; then
+  build_target="clang"
+fi
+
+shift
+set -e
+ninja -C "$build_dir" "$build_target" 1>&2
+exec $run_under "$build_dir"/bin/"$bin" $@
