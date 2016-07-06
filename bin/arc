@@ -21,7 +21,8 @@ def main():
       return
     sys.exit(1)
 
-  if not diff or diff.strip() == 'clang-format did not modify any files':
+  if (not diff or diff.strip() == 'clang-format did not modify any files' or
+      diff.strip() == 'no modified files to format'):
     return
 
   print('clang-format suggested the following changes:\n')
@@ -40,5 +41,5 @@ def main():
 
 if __name__ == '__main__':
   main()
-  real_arc = os.path.join(os.path.dirname(__FILE__), 'arc-real')
+  real_arc = os.path.join(os.path.dirname(__file__), 'arc-real')
   os.execv(real_arc, sys.argv)
