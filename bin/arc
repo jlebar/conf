@@ -5,25 +5,19 @@ import os
 import stat
 import subprocess
 import sys
+import re
 
-
-def main():
-  if len(sys.argv) != 3 or sys.argv[1] != 'diff':
-    # Not "arc diff blah"; fall through.
-    return
-
+def check_format():
   try:
     # TODO: This loses us color and pagination, but oh well.
     diff = subprocess.check_output(['git', 'clang-format', '--diff', sys.argv[2]])
   except subprocess.CalledProcessError:
     yorn = raw_input('Error running git-clang-format.  Continue running arc? [yN] ')
-    if yorn.lower() == 'y':
-      return
-    sys.exit(1)
+    return yorn.lower() == 'y'
 
   if (not diff or diff.strip() == 'clang-format did not modify any files' or
       diff.strip() == 'no modified files to format'):
-    return
+    return True
 
   print('clang-format suggested the following changes:\n')
   print(diff)
@@ -32,10 +26,36 @@ def main():
   if stat.S_ISFIFO(mode) or stat.S_ISREG(mode):
     print('Detected non-interactive mode.  Proceeding to arc diff...',
           file=sys.stderr)
-    return
+    return True
 
   yorn = raw_input('Proceed with arc diff? [yN] ')
-  if yorn.lower() != 'y':
+  return yorn.lower() == 'y'
+
+
+def check_constexpr():
+  try:
+    diff = subprocess.check_output(['git', 'diff', sys.argv[2]])
+  except subprocess.CalledProcessError:
+    yorn = raw_input('Error grabbing diff to check for constexpr.  '
+                     'Continue running arc? [yN] ')
+    return yorn.lower() == 'y'
+
+  matches = list(re.findall(r'^\+.*\bconstexpr\b.*$', diff))
+  if not matches:
+    return True
+
+  print('Looks like maybe constexpr was added in this patch?')
+  for m in matches:
+    print(m.group(0))
+  yorn = raw_input('Proceed with arc diff? [yN] ')
+  return yorn.lower() == 'y'
+
+def main():
+  if len(sys.argv) != 3 or sys.argv[1] != 'diff':
+    # Not "arc diff blah"; fall through.
+    return
+
+  if not check_format() or not check_constexpr():
     sys.exit(1)
 
 
