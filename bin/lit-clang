@@ -1,1 +1,3 @@
-../llvm-tools/lit-clang
+#!/bin/bash
+export LIT_USE_INTERNAL_SHELL=1
+exec ~/llvm/src/utils/lit/lit.py --param clang_site_config=tools/clang/test/lit.site.cfg tools/clang/test $@
