@@ -189,16 +189,17 @@ let g:ycm_extra_conf_globlist = ['~/code/llvm/src/.ycm_extra_conf.py']
 " Google-specific stuff
 if !empty(glob('/usr/share/vim/google/google.vim'))
   source /usr/share/vim/google/google.vim
-  Glug youcompleteme-google
   Glug grok
   Glug whitespace !highlight
   Glug codefmt gofmt_executable="goimports"
   Glug codefmt-google
   Glug blazedeps auto_filetypes=`['go']`
+
   " Don't load the public YCM via pathogen.  We have to name the plugin
   " 'YouCompleteMePublic' because there's a check in some config file for
   " plugins named 'YouCompleteMe'.
   let g:pathogen_disabled = ['YouCompleteMePublic']
+  Glug youcompleteme-google
 endif
 
 execute pathogen#infect()
