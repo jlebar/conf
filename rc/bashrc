@@ -137,3 +137,7 @@ if [[ "$PROMPT_COLOR" == "" ]]; then
     PROMPT_COLOR="34m"
   fi
 fi
+
+alias g1="cd $HOME/overlay/google1/google3"
+alias g2="cd $HOME/overlay/g2/google3"
+alias g3="cd $HOME/overlay/g3/google3"
