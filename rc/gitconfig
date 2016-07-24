@@ -37,6 +37,7 @@
 [diff]
         algorithm = histogram
 	tool = meld
+        compactionHeuristic = yes
 [multi]
 	exporttags = default
 	lgtm-msg-read = yes
@@ -52,3 +53,7 @@
         ex = "!f() { git multi export \"$@\"; git prompt-to-delete-if-empty; }; f"
 [clangformat]
         style = "file"
+[commit]
+	verbose = true
+[interactive]
+	diffFilter = diff-highlight
