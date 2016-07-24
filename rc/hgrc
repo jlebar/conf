@@ -29,14 +29,14 @@ bookmarks =
 #hggit =
 relink =
 prompt = $CONFDIR/hgext/hg-prompt-local/prompt.py
-paste = $CONFDIR/hgext/hg-paste/paste.py
-qimportbz = $CONFDIR/hgext/qimportbz
-bzexport = $CONFDIR/hgext/bzexport/bzexport.py
+#paste = $CONFDIR/hgext/hg-paste/paste.py
+#qimportbz = $CONFDIR/hgext/qimportbz
+#bzexport = $CONFDIR/hgext/bzexport/bzexport.py
 #patience = $CONFDIR/hgext/hg-patience/patience.py
 #mqext = $CONFDIR/hgext/mqext
 #inotify =
 transplant =
-qbackout = $CONFDIR/hgext/qbackout
+#qbackout = $CONFDIR/hgext/qbackout
 
 [bzexport]
 #api_server = https://api-dev.bugzilla.mozilla.org/test/latest/
