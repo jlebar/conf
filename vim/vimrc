@@ -80,6 +80,7 @@ noremap <leader>8 :vertical resize 80<CR>
 " wildmenu for file open tab completion.  Press ^D to see contents of current
 " dir.
 set wildmenu
+set wildmode=longest:full
 set wildignore=*.o,*.obj,*.bak,*.exe,*.class,*.pyc,*.pyo
 
 "set verbose=9
