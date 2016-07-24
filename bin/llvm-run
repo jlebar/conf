@@ -9,18 +9,18 @@
 # Usage: etc.
 
 debug=0
-run_under=""
+debugger=""
 if [[ "$1" == "--debug" ]]; then
   shift
   debug=1
 elif [[ "$1" == "--gdb" ]]; then
   shift
   debug=1
-  run_under="gdb --args"
+  debugger="gdb"
 elif [[ "$1" == "--rr" ]]; then
   shift
   debug=1
-  run_under="rr record"
+  debugger="rr"
 fi
 
 if [[ "$debug" == 0 ]]; then
@@ -38,4 +38,19 @@ fi
 shift
 set -e
 ninja -C "$build_dir" "$build_target" 1>&2
-exec $run_under "$build_dir"/bin/"$bin" $@
+
+to_run="$build_dir/bin/$bin"
+if [[ "$debugger" == "" ]]; then
+  exec "$to_run" $@
+elif [[ "$debugger" == "gdb" ]]; then
+  exec gdb -ex "source $HOME/llvm/src/utils/gdb-scripts/prettyprinters.py" --args "$to_run" $@
+elif [[ "$debugger" == "rr" ]]; then
+  source_tmp="$(mktemp)"
+  echo "source $HOME/llvm/src/utils/gdb-scripts/prettyprinters.py" > "$source_tmp"
+
+  set +e
+  rr record "$to_run" $@
+  rr replay -x "$source_tmp"
+  set -e
+  rm "$source_tmp"
+fi
