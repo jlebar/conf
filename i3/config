@@ -61,7 +61,6 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-# TODO(jlebar): Better shortcut?  I'm not sure what this does.
 bindsym $mod+Shift+v split h
 
 # split in vertical orientation
