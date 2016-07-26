@@ -119,7 +119,7 @@ PERL_MM_OPT="INSTALL_BASE=/usr/local/google/home/jlebar/perl5"; export PERL_MM_O
 
 export GOPATH="$HOME/.gocode"
 
-# See https://wiki.corp.google.com/twiki/bin/view/Main/G4Recipes#Diff_Tools
+# See http://wiki/twiki/bin/view/Main/G4Recipes#Diff_Tools
 export P4DIFF=gitdiff
 #export P4MERGE=meldmerge
 export G4MULTIDIFF=1
@@ -128,10 +128,9 @@ export USE_QTOP_PROMPT=1
 
 # Machine-specific stuff
 if [[ "$PROMPT_COLOR" == "" ]]; then
-  if [[ "$HOSTNAME" == "jlebar0.mtv.corp.google.com" || \
-        "$HOSTNAME" == "jlebar0.mtv.corp.google.com" ]]; then
+  if [[ "$HOSTNAME" == jlebar.* ]] || [[ "$HOSTNAME" == jlebar.* ]]; then
     PROMPT_COLOR="31m"
-  elif [[ "$HOSTNAME" == "jlebar-macbookpro2.roam.corp.google.com" ]]; then
+  elif [[ "$HOSTNAME" == jlebar-macbookpro* ]]; then
     PROMPT_COLOR="32m"
   else
     PROMPT_COLOR="34m"
