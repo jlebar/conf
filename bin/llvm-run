@@ -24,9 +24,9 @@ elif [[ "$1" == "--rr" ]]; then
 fi
 
 if [[ "$debug" == 0 ]]; then
-  build_dir="$HOME/code/llvm/release"
+  build_dir="$HOME/llvm/release"
 else
-  build_dir="$HOME/code/llvm/debug"
+  build_dir="$HOME/llvm/debug"
 fi
 bin="$1"
 build_target="$bin"
@@ -42,11 +42,13 @@ ninja -C "$build_dir" "$build_target" 1>&2
 to_run="$build_dir/bin/$bin"
 if [[ "$debugger" == "" ]]; then
   exec "$to_run" $@
-elif [[ "$debugger" == "gdb" ]]; then
-  exec gdb -ex "source $HOME/llvm/src/utils/gdb-scripts/prettyprinters.py" --args "$to_run" $@
+fi
+
+if [[ "$debugger" == "gdb" ]]; then
+  exec gdb -ex "source $HOME/llvm/llvm/utils/gdb-scripts/prettyprinters.py" --args "$to_run" $@
 elif [[ "$debugger" == "rr" ]]; then
   source_tmp="$(mktemp)"
-  echo "source $HOME/llvm/src/utils/gdb-scripts/prettyprinters.py" > "$source_tmp"
+  echo "source $HOME/llvm/llvm/utils/gdb-scripts/prettyprinters.py" > "$source_tmp"
 
   set +e
   rr record "$to_run" $@
