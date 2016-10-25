@@ -184,7 +184,7 @@ autocmd FileType asm       setlocal comments^=:;
 let c_no_curly_error=1
 let g:ycm_enable_diagnostic_signs=0
 let g:ycm_always_populate_location_list=1
-let g:ycm_extra_conf_globlist = ['~/code/llvm/src/.ycm_extra_conf.py']
+let g:ycm_extra_conf_globlist = ['~/code/llvm/.ycm_extra_conf.py']
 
 " Google-specific stuff
 if !empty(glob('/usr/share/vim/google/google.vim'))
@@ -214,6 +214,7 @@ set completeopt-=preview
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_max_files = 500000
 let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Bindings for YCM awesomeness.  We use 't' rather than the perhaps more natural
 " 'y' because fingers.
@@ -223,5 +224,7 @@ noremap <leader>td :YcmDiags<cr>
 noremap <leader>tg :YcmCompleter GoTo<cr>
 noremap <leader>tt :YcmCompleter GetType<cr>
 noremap <leader>tp :YcmCompleter GetParent<cr>
+noremap <leader>tf :YcmCompleter FixIt<cr>:ClangFormat<cr>
 
 noremap <leader>c  :YcmForceCompileAndDiagnostics<cr>
+noremap <leader>gg  :Ggrep -w <cword><cr>:cw<cr>

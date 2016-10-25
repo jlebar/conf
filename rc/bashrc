@@ -11,6 +11,8 @@ export CCACHE_SLOPPINESS="file_stat_matches,time_macros"
 export ANDROID_SDK=$HOME/code/moz/android-sdk-linux_x86
 export ANDROID_NDK=$HOME/code/moz/android-ndk-r6
 
+export OVERLAYGIT_GITBINARY="$HOME/code/git/git"  # le sigh
+
 set -o vi
 alias ..='cd ..'
 alias ...='cd ../..'
