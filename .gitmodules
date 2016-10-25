@@ -1,9 +1,6 @@
 [submodule "git-tools"]
 	path = git-tools
 	url = git@github.com:jlebar/moz-git-tools.git
-[submodule "reorder-patch"]
-	path = reorder-patch
-	url = git@github.com:jlebar/reorder-patch.git
 [submodule "vim/search_plugin"]
 	path = vim/search_plugin
 	url = git@github.com:jlebar/search-plugin.git
