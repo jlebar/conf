@@ -5,4 +5,4 @@ sed="$(which gsed sed | head -n1)"
 
 infile="$1"
 outfile="$(dirname "$1")/$(basename "$1" | $sed -e 's/\.[^.]\+$//').flac"
-ffmpeg -i "$infile" "$outfile"
+ffmpeg -i "$infile" -map_metadata 0 "$outfile"
