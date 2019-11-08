@@ -1,6 +1,7 @@
 [user]
         name = Justin Lebar
         email = jlebar@google.com
+	signingkey = justin.lebar@gmail.com
 
 [core]
         excludesfile = ~/.gitignore
@@ -32,7 +33,7 @@
         autosetuprebase = always
 
 [push]
-	default = matching
+	default = current
 
 [diff]
         algorithm = histogram
