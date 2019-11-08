@@ -123,8 +123,9 @@ endif
 
 " set display+=lastline " not sure what this does
 
-"set backupdir=$TEMP\\vim\\
-"set directory=$TEMP\\vim\\
+set backupdir=/tmp//
+set directory=/tmp//
+set undodir=/tmp//
 "silent execute '!rm -f '.$TEMP.'/vim/*~'
 set nobackup
 set nowritebackup
