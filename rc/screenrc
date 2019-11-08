@@ -8,7 +8,7 @@ password none
 #change the hardstatus settings to give an window list at the bottom of the
 #screen, with the time and date and with the current window highlighted
 hardstatus alwayslastline
-hardstatus string '%{= gK}%-Lw%{= KW}%50>%n%f* %t%{= gK}%+Lw%< %{= kG}%-='
+hardstatus string '%{= rK}%-Lw%{= KW}%50>%n%f* %t%{= rK}%+Lw%< %{= kG}%-='
 altscreen on
 
 # Turns off alternate screen switching in xterms,
