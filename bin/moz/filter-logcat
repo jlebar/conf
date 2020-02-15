@@ -1,3 +1,0 @@
-#!/bin/bash
-
-adb logcat -v time | grep -v --line-buffered '^[^ ]\+ [^ ]\+ ./\(ONCRPC\|memalloc\|Sensors\|HWComposer\|Diag_Lib\|QCRIL\|wpa_supplicant\|IdleService\|QCameraHWI\|mm-camera\)'

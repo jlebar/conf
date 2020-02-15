@@ -1,4 +1,0 @@
-#!/bin/bash
-
-adb shell am start -n org.mozilla.fennec_jlebar/.App --es env0 NSPR_LOG_MODULES=hal:5
-adb logcat

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# This script strips out /usr/local/opt/coreutils/libexec/gnubin from PATH and
-# then runs whatever you passed in.
+# This script strips out /usr/local/opt/coreutils/libexec/gnubin &c from PATH
+# and then runs whatever you passed in.
 
-PATH="$(echo $PATH | sed -E -e 's!(^|:)/usr/local/opt/coreutils/libexec/gnubin($|:)!\1!')" $@
+export PATH="$(echo "$PATH" | gsed -E -e 's!(^|:)/usr/local/opt/[^/]*/libexec/gnubin($|:)!\1!g')"
+export MANPATH="$(echo "$MANPATH" | gsed -E -e 's!(^|:)/usr/local/opt/[^/]*/libexec/gnuman($|:)!\1!g')"
+exec $@

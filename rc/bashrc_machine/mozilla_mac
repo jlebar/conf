@@ -1,2 +1,0 @@
-export PS1='\u@\h \w$ '
-source $CONFDIR/shell-src/moz-dirs.sh

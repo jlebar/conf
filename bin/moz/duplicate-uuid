@@ -1,6 +1,0 @@
-#!/bin/bash
-DUPES=$(find . -name '*.idl' | xargs grep -oh 'uuid(.*)' | sort -f | uniq --repeated)
-for dupe in $DUPES; do
-  find . -name '*.idl' | xargs fgrep -n $dupe
-  echo '---'
-done

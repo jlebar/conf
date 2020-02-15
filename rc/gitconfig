@@ -57,4 +57,6 @@
 [commit]
 	verbose = true
 [interactive]
-	diffFilter = diff-highlight
+        #diffFilter = diff-highlight
+[credential]
+	helper = osxkeychain
