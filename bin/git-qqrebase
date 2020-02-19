@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Like git qrebase, except starts at $(git qparent)^.  This is useful if you
+# want to add something to the top of your patch queue.  It's not the default
+# because showing one additional commit in git qrebase is kind of confusing.
+git rebase -i $(git qparent)^

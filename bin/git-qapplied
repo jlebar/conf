@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# USAGE: git qapplied [branch]
+#
+# As an analog to |hg qapplied|, |git qapplied| lists the commits in the given
+# branch which are not in the master branch.  If a branch is not given, the
+# branch is the current branch.
+
+set -e
+
+export PATH="$(dirname "$0"):$PATH"
+
+branch="$1"
+[ ! -z "$branch" ] || branch="$(git rev-parse --abbrev-ref HEAD)"
+
+echo "Branch $branch (downstream from $(git tracks -d $branch))"
+git log --reverse --date-order --pretty=oneline --abbrev-commit "$(git qparent "$branch")".."$branch"

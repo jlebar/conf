@@ -115,3 +115,6 @@ if type brew &>/dev/null; then
 fi
 
 alias ls='ls --color=auto'
+export EDITOR="vim"
+
+eval "$(pyenv init -)"

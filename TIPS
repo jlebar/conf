@@ -23,3 +23,7 @@ pdftk foo.pdf bar.pdf cat output foobar.pdf
 * Disable blinking cursor in gnome-terminal
 
     $ gconftool-2 --set /apps/gnome-terminal/profiles/Default/cursor_blink_mode --type string off
+
+== Macos defaults ==
+
+$ defaults write com.apple.PowerChime ChimeOnNoHardware -bool true

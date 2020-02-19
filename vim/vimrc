@@ -206,7 +206,7 @@ endif
 execute pathogen#infect()
 
 "autocmd FileType go AutoFormatBuffer gofmt
-autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
+"autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
 
 " Disable YCM's autocomplete buffer thingy at the top of the screen.
 set completeopt-=preview
