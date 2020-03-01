@@ -40,3 +40,9 @@
 [submodule "vim/bundle/vim-gitgutter"]
 	path = vim/bundle/vim-gitgutter
 	url = git://github.com/airblade/vim-gitgutter.git
+[submodule "vim/bundle/vim-es6"]
+	path = vim/bundle/vim-es6
+	url = https://github.com/isruslan/vim-es6
+[submodule "vim/bundle/ultisnips"]
+	path = vim/bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
