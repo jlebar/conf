@@ -4,6 +4,8 @@ if exists("jlebar_vimrc_loaded")
 endif
 let jlebar_vimrc_loaded = 1
 
+execute pathogen#infect()
+
 filetype plugin indent on
 
 syntax on
@@ -145,11 +147,11 @@ set laststatus=2
 set cmdheight=2
 set shortmess=a
 
-function! CodeSearch()
-  execute ":silent !csweb " . expand('%') . " " . line(".")
+function! GitHubLink()
+  execute ":silent !open $(git-remote-link " . expand('%') . ":" . line(".") . ")"
   redraw!
 endfunction
-command! CS :call CodeSearch()
+command! GH :call GitHubLink()
 
 noremap <leader>f :ClangFormat<CR>
 
@@ -202,8 +204,6 @@ if !empty(glob('/usr/share/vim/google/google.vim'))
   let g:pathogen_disabled = ['YouCompleteMePublic']
   Glug youcompleteme-google
 endif
-
-execute pathogen#infect()
 
 "autocmd FileType go AutoFormatBuffer gofmt
 "autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
