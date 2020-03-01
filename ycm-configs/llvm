@@ -48,7 +48,7 @@ import ycm_core
 def DirectoryOfThisScript():
   return os.path.dirname(os.path.abspath(__file__))
 
-compilation_database_folder = os.path.join(DirectoryOfThisScript(), 'release')
+compilation_database_folder = os.path.join(DirectoryOfThisScript(), 'build-release')
 
 database = ycm_core.CompilationDatabase(compilation_database_folder)
 
