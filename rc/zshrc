@@ -74,6 +74,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+export CONFDIR=$HOME/code/conf
+
+fpath+=$CONFDIR/pure
 autoload -U promptinit; promptinit
 prompt pure
 
