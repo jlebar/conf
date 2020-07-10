@@ -122,6 +122,7 @@ fi
 
 alias ls='ls --color=auto'
 export EDITOR="vim"
+export SAVEHIST=1000000
 
 ###### vi-mode ######
 # The "pure" prompt says not to enable oh-my-zsh vi-mode plugin for whatever reason.
@@ -166,3 +167,7 @@ bindkey '^s' history-incremental-search-forward
 # unset __conda_setup
 # # <<< conda initialize <<<
 
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+
+export PATH="$PATH:/usr/local/opt/qt/bin:$HOME/.local/bin"

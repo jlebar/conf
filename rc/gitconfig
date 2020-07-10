@@ -1,7 +1,7 @@
 [user]
         name = Justin Lebar
-        email = jlebar@google.com
-	signingkey = justin.lebar@gmail.com
+        email = justin.lebar@gmail.com
+	signingkey = 13778D367B90F8BF
 
 [core]
         excludesfile = ~/.gitignore
@@ -17,7 +17,7 @@
         lg = log --oneline
         df = diff -U8 --histogram -M -C
         dif = diff -U8 --histogram -M -C
-        rbc = rebase --continue
+        #rbc = rebase --continue
 
         caa = commit -a --amend --no-edit
         ca = commit --amend --no-edit
@@ -56,7 +56,10 @@
         style = "file"
 [commit]
 	verbose = true
+	gpgsign = true
 [interactive]
         #diffFilter = diff-highlight
 [credential]
 	helper = osxkeychain
+[pr-chain]
+        branch-prefix = "jlebar/"

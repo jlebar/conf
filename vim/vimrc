@@ -187,8 +187,7 @@ autocmd FileType asm       setlocal comments^=:;
 let c_no_curly_error=1
 let g:ycm_enable_diagnostic_signs=0
 let g:ycm_always_populate_location_list=1
-let g:ycm_extra_conf_globlist = ['~/code/llvm/.ycm_extra_conf.py']
-
+let g:ycm_extra_conf_globlist = [ '~/code/llvm/.ycm_extra_conf.py', '~/code/VentilatorSoftware/.ycm_extra_conf.py', '~/code/VentilatorSoftware2/.ycm_extra_conf.py' ]
 " Google-specific stuff
 if !empty(glob('/usr/share/vim/google/google.vim'))
   source /usr/share/vim/google/google.vim
@@ -229,3 +228,6 @@ noremap <leader>tf :YcmCompleter FixIt<cr>:ClangFormat<cr>
 
 noremap <leader>c  :YcmForceCompileAndDiagnostics<cr>
 noremap <leader>gg  :Ggrep -w <cword><cr>:cw<cr>
+
+" Don't search inside of folds.
+set fdo-=search
