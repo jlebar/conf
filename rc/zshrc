@@ -105,6 +105,7 @@ prompt pure
 
 export CONFDIR="$HOME/code/conf"
 
+path+=($HOME/bin)
 path+=($CONFDIR/bin)
 export PATH
 
