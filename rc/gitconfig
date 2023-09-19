@@ -59,7 +59,9 @@
 	gpgsign = true
 [interactive]
         #diffFilter = diff-highlight
-[credential]
-	helper = osxkeychain
+#[credential]
+#	helper = osxkeychain
 [pr-chain]
         branch-prefix = "jlebar/"
+[http]
+	cookiefile = /usr/local/google/home/jlebar/.gitcookies

@@ -4,8 +4,6 @@ if exists("jlebar_vimrc_loaded")
 endif
 let jlebar_vimrc_loaded = 1
 
-execute pathogen#infect()
-
 filetype plugin indent on
 
 syntax on
@@ -133,7 +131,7 @@ set nobackup
 set nowritebackup
 
 "enable mouse
-set mouse=a
+"set mouse=a
 set modeline
 
 set statusline=%f\ %y\ %([%R%M]%)\ %=#%n\ %l/%L,%c%V
@@ -185,9 +183,19 @@ autocmd FileType asm       setlocal comments^=:;
 
 " Don't highlight C++11 initializer lists in red.
 let c_no_curly_error=1
+let g:ycm_auto_trigger=1
+" ctrl-space doesn't work well with mac because...something.
+let g:ycm_key_invoke_completion = '<leader>a'
 let g:ycm_enable_diagnostic_signs=0
 let g:ycm_always_populate_location_list=1
 let g:ycm_extra_conf_globlist = [ '~/code/llvm/.ycm_extra_conf.py', '~/code/VentilatorSoftware/.ycm_extra_conf.py', '~/code/VentilatorSoftware2/.ycm_extra_conf.py' ]
+" ycm-auto-hover causes vim to freeze
+" TODO: Does this actually disable it?
+let g:ycm_auto_hover=''
+
+let g:pathogen_disabled = []
+"let g:pathogen_disabled += ['ctrlp.vim', 'ctrlp']
+
 " Google-specific stuff
 if !empty(glob('/usr/share/vim/google/google.vim'))
   source /usr/share/vim/google/google.vim
@@ -195,17 +203,25 @@ if !empty(glob('/usr/share/vim/google/google.vim'))
   Glug whitespace !highlight
   Glug codefmt gofmt_executable="goimports"
   Glug codefmt-google
+  Glug blaze
+  Glug blazedeps plugin[mappings]
   Glug blazedeps auto_filetypes=`['go']`
 
   " Don't load the public YCM via pathogen.  We have to name the plugin
   " 'YouCompleteMePublic' because there's a check in some config file for
   " plugins named 'YouCompleteMe'.
-  let g:pathogen_disabled = ['YouCompleteMePublic']
+  let g:pathogen_disabled += ['YouCompleteMePublic']
   Glug youcompleteme-google
+
+  " clang-include-fixer
+  nnoremap <leader>cf :let g:clang_include_fixer_query_mode=0<cr>:py3f /usr/lib/clang-include-fixer/clang-include-fixer.py<cr>
+  nnoremap <leader>qf :let g:clang_include_fixer_query_mode=1<cr>:py3f /usr/lib/clang-include-fixer/clang-include-fixer.py<cr>
+
+  "let g:ycm_clangd_args=["-blaze-args=--config=car_gpu"]
 endif
 
 "autocmd FileType go AutoFormatBuffer gofmt
-"autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
+autocmd FileType bzl,blazebuild AutoFormatBuffer buildifier
 
 " Disable YCM's autocomplete buffer thingy at the top of the screen.
 set completeopt-=preview
@@ -214,7 +230,13 @@ set completeopt-=preview
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_max_files = 500000
 let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files -co --exclude-standard'],
+    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+    \ },
+  \ 'fallback': 'find %s -type f'
+  \ }
 
 " Bindings for YCM awesomeness.  We use 't' rather than the perhaps more natural
 " 'y' because fingers.
@@ -231,3 +253,5 @@ noremap <leader>gg  :Ggrep -w <cword><cr>:cw<cr>
 
 " Don't search inside of folds.
 set fdo-=search
+
+execute pathogen#infect()

@@ -52,3 +52,6 @@
 [submodule "ohmyzsh"]
 	path = ohmyzsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
+[submodule "zlong_alert.zsh"]
+	path = zlong_alert.zsh
+	url = https://github.com/kevinywlui/zlong_alert.zsh.git

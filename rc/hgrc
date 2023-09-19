@@ -10,6 +10,7 @@ qapplied = -v
 #qref = -U -D
 
 [alias]
+xx = x -l10
 qstatus = status --rev qtip^
 qedit = !S=$(hg root)/.hg/patches/series; cp $S $S.bak && perl -pale 'BEGIN { chomp(@a = qx(hg qapplied -q)); die if $?; @a{@a}=(); }; s/^/# (applied) / if exists $a{$F[0]}' $S > $S.new && ${EDITOR-vim} $S.new && sed -e 's/^# .applied. //' $S.new > $S
 
@@ -28,7 +29,7 @@ convert =
 bookmarks =
 #hggit =
 relink =
-prompt = $CONFDIR/hgext/hg-prompt-local/prompt.py
+#prompt = $CONFDIR/hgext/hg-prompt-local/prompt.py
 #paste = $CONFDIR/hgext/hg-paste/paste.py
 #qimportbz = $CONFDIR/hgext/qimportbz
 #bzexport = $CONFDIR/hgext/bzexport/bzexport.py
@@ -36,7 +37,11 @@ prompt = $CONFDIR/hgext/hg-prompt-local/prompt.py
 #mqext = $CONFDIR/hgext/mqext
 #inotify =
 transplant =
+journal =
 #qbackout = $CONFDIR/hgext/qbackout
+
+# go/alices-hgext
+unsupported.alices=
 
 [bzexport]
 #api_server = https://api-dev.bugzilla.mozilla.org/test/latest/
@@ -92,3 +97,62 @@ qseries.missing = red
 
 resolve.unresolved = red
 resolve.resolved = none
+
+[revsetalias]
+rc = children(.)
+rcc = children(rc)
+rccc = children(rcc)
+rcccc = children(rccc)
+rccccc = children(rcccc)
+# Hide revisions for #archived CLs without reverting the CLs.
+smart_user_uninteresting = obsolete() or desc("#archive")
+
+[alices]
+findings.extra_args = --proxy
+summarize.extra_args = --proxy
+
+[google_hgext]
+enable.daemon = true
+
+[fig_daemon_flags]
+fig_daemon_changelist_watcher_addr=https://piper-fig.corp.google.com/
+fig_daemon_changelist_watcher_protocol=HTTP+SSO
+
+[committemplate]
+changeset = {desc}\n\n
+    HG: Enter commit message.  Lines beginning with 'HG:' are removed.
+    HG: {extramsg}
+    HG: --
+    HG: user: {author}\n{ifeq(p2rev, "-1", "",
+   "HG: branch merge\n")
+   }HG: branch '{branch}'\n{if(activebookmark,
+   "HG: bookmark '{activebookmark}'\n")   }{subrepos %
+   "HG: subrepo {subrepo}\n"              }{file_adds %
+   "HG: added {file}\n"                   }{file_mods %
+   "HG: changed {file}\n"                 }{file_dels %
+   "HG: removed {file}\n"                 }{if(files, "",
+   "HG: no files changed\n")}
+   HG: Diff shown below
+   HG: ------------------------ >8 ------------------------
+   {diff()}
+
+changeset.commit.normal.normal = {desc}\n
+    DRIVING_OPS_RELNOTES=None
+    TESTED=existing/added/heuristics-eval/manual/deferred/skipped
+    SKIP_SIM_PRESUBMIT=takes 2-4hr, and is not relevant to this change
+    EXPORT_TO_GITHUB_PR=1\n\n
+    HG: Enter commit message.  Lines beginning with 'HG:' are removed.
+    HG: {extramsg}
+    HG: --
+    HG: user: {author}\n{ifeq(p2rev, "-1", "",
+   "HG: branch merge\n")
+   }HG: branch '{branch}'\n{if(activebookmark,
+   "HG: bookmark '{activebookmark}'\n")   }{subrepos %
+   "HG: subrepo {subrepo}\n"              }{file_adds %
+   "HG: added {file}\n"                   }{file_mods %
+   "HG: changed {file}\n"                 }{file_dels %
+   "HG: removed {file}\n"                 }{if(files, "",
+   "HG: no files changed\n")}
+   HG: Diff shown below
+   HG: ------------------------ >8 ------------------------
+   {diff()}

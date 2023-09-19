@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 
 from __future__ import print_function
 import os
@@ -61,5 +61,5 @@ def main():
 
 if __name__ == '__main__':
   main()
-  real_arc = os.path.join(os.path.dirname(__file__), 'arc-real')
+  real_arc = os.path.join(os.path.dirname(__file__), '../arcanist/bin/arc')
   os.execv(real_arc, sys.argv)

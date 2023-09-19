@@ -79,6 +79,8 @@ fpath+=$CONFDIR/pure
 autoload -U promptinit; promptinit
 prompt pure
 
+source "$CONFDIR/zlong_alert.zsh/zlong_alert.zsh"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -121,8 +123,11 @@ if type brew &>/dev/null; then
 fi
 
 alias ls='ls --color=auto'
+alias hg='chg'
 export EDITOR="vim"
 export SAVEHIST=1000000
+export TERM=xterm-256color
+export XDG_DATA_HOME="$HOME/.local/share"
 
 ###### vi-mode ######
 # The "pure" prompt says not to enable oh-my-zsh vi-mode plugin for whatever reason.
@@ -167,7 +172,84 @@ bindkey '^s' history-incremental-search-forward
 # unset __conda_setup
 # # <<< conda initialize <<<
 
+# https://stackoverflow.com/a/42265848/61394
+export GPG_TTY=$(tty)
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
 
-export PATH="$PATH:/usr/local/opt/qt/bin:$HOME/.local/bin"
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi
+
+# ohmyzsh makes a *global* alias of ... to ../..
+# This breaks e.g. bazel build ...
+# Re-alias it as a *command* alias.
+unalias '...'
+alias ...='cd ../..'
+
+setopt share_history
+
+#export MCFLY_LIGHT=TRUE
+#eval "$(mcfly init zsh)"
+
+export WINDOWS_COMMON_FILE=learning/brain/testing/kokoro/common_win_google.bat
+export MACOS_COMMON_FILE=learning/brain/testing/kokoro/common_google.sh
+
+function get_client_command {
+    hg status >/dev/null 2>&1
+    if [[ "$?" -eq 0 ]]; then
+        echo "Detected fig client."
+        CLIENT_COMMAND="hg"
+    else
+        echo "Detected p4 client."
+        CLIENT_COMMAND="g4"
+    fi
+}
+
+
+function enable_tf_windows_presubmits {
+    get_client_command
+    if [[ "${CLIENT_COMMAND}" == "hg" ]]; then
+        echo "@REM TODO(jlebar): DO NOT SUBMIT Please revert this change prior to submission." >> "${WINDOWS_COMMON_FILE}"
+        hg amend
+        hg uploadchain
+    else
+        echo "@REM TODO(jlebar): DO NOT SUBMIT Please revert this change prior to submission." >> "${WINDOWS_COMMON_FILE}"
+        g4 reopen
+    fi
+}
+
+function disable_tf_windows_presubmits {
+    get_client_command
+    if [[ "${CLIENT_COMMAND}" == "hg" ]]; then
+        hg revert -r p4head learning/brain/testing/kokoro/common_win_google.bat
+        hg amend
+        hg uploadchain
+    else
+        g4 revert learning/brain/testing/kokoro/common_win_google.bat
+    fi
+}
+
+function enable_tf_macos_presubmits {
+    get_client_command
+    if [[ "${CLIENT_COMMAND}" == "hg" ]]; then
+        echo "# TODO(jlebar): DO NOT SUBMIT Please revert this change prior to submission." >> "${MACOS_COMMON_FILE}"
+        hg amend
+        hg uploadchain
+    else
+        echo "# TODO(jlebar): DO NOT SUBMIT Please revert this change prior to submission." >> "${MACOS_COMMON_FILE}"
+        g4 reopen
+    fi
+}
+
+function disable_tf_macos_presubmits {
+    get_client_command
+    if [[ "${CLIENT_COMMAND}" == "hg" ]]; then
+        hg revert -r p4head learning/brain/testing/kokoro/common_google.sh
+        hg amend
+        hg uploadchain
+    else
+        g4 revert learning/brain/testing/kokoro/common_google.sh
+    fi
+}
+
